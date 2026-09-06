@@ -1,0 +1,6 @@
+{
+  "name": "Expense Tracker",
+  "description": "Full-stack MERN Expense Tracker with JWT Auth, Mongoose aggregation pipelines, budget tracking, recurring transactions, analytics, and CSV export.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

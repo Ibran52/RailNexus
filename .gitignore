@@ -1,0 +1,32 @@
+# Root .gitignore for RailNexus monorepo
+node_modules/
+*/node_modules/
+dist/
+*/dist/
+build/
+*/build/
+coverage/
+*/coverage/
+*.log
+.DS_Store
+
+# Secrets and environment configurations
+.env
+.env.*
+!.env.example
+*/.env
+*/.env.*
+!*/.env.example
+
+# Python
+__pycache__/
+*/__pycache__/
+*/**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+*/.pytest_cache/
+.venv/
+env/
+venv/

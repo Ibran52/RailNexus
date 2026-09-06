@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#F8FAFC] text-[#0F172A] antialiased selection:bg-rail-navy selection:text-white;
+  }
+}
+
+/* Operational Railway Track Styling */
+.railway-track-bg {
+  background-image: repeating-linear-gradient(
+    90deg,
+    #CBD5E1,
+    #CBD5E1 3px,
+    transparent 3px,
+    transparent 20px
+  );
+}
+
+/* Subtle custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
