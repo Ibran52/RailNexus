@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { getAccessToken, executeTokenRefresh } from '../api/client';
+import { apiBaseUrl, getAccessToken, executeTokenRefresh } from '../api/client';
 
 export interface ControllerEvent {
   eventType: string;
@@ -57,7 +57,7 @@ export function useControllerEvents(onEvent?: (event: ControllerEvent) => void) 
       abortControllerRef.current = new AbortController();
 
       try {
-        const response = await fetch('/api/v1/controller/events', {
+        const response = await fetch(`${apiBaseUrl}/controller/events`, {
           headers: {
             Authorization: `Bearer ${token}`,
             Accept: 'text/event-stream',

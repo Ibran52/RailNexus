@@ -21,7 +21,12 @@ export const GeographicCorridorImpactMap: React.FC<GeographicCorridorImpactMapPr
   candidate,
 }) => {
   const validStations = useMemo(
-    () => stations.filter((station) => Number.isFinite(station.latitude) && Number.isFinite(station.longitude)),
+    () => stations.filter((station) => (
+      Number.isFinite(station.latitude) &&
+      Number.isFinite(station.longitude) &&
+      station.latitude >= -90 && station.latitude <= 90 &&
+      station.longitude >= -180 && station.longitude <= 180
+    )),
     [stations]
   );
   const byCode = useMemo(() => new Map(validStations.map((station) => [station.station_code, station])), [validStations]);

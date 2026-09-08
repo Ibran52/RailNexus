@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { getAccessToken, executeTokenRefresh } from '../api/client';
+import { apiBaseUrl, getAccessToken, executeTokenRefresh } from '../api/client';
 
 export interface MaintenanceEvent {
   eventType: string;
@@ -62,7 +62,7 @@ export function useMaintenanceEvents(onEvent?: (event: MaintenanceEvent) => void
       abortControllerRef.current = new AbortController();
 
       try {
-        const response = await fetch('/api/v1/maintenance/events', {
+        const response = await fetch(`${apiBaseUrl}/maintenance/events`, {
           headers: {
             Authorization: `Bearer ${token}`,
             Accept: 'text/event-stream',

@@ -21,6 +21,8 @@ export interface EnvConfig {
 }
 
 function validateEnv(): EnvConfig {
+  const NODE_ENV = process.env.NODE_ENV || 'development';
+  const isProduction = NODE_ENV === 'production';
   const MONGO_URI = process.env.MONGO_URI?.trim();
   if (!MONGO_URI) {
     console.error('FATAL: MONGO_URI environment variable is missing or empty. RailNexus backend cannot start without MongoDB Atlas persistence.');
@@ -42,12 +44,19 @@ function validateEnv(): EnvConfig {
   }
 
   const PORT = parseInt(process.env.PORT || '5000', 10);
-  const NODE_ENV = process.env.NODE_ENV || 'development';
   const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '15m';
   const REFRESH_TOKEN_EXPIRY = process.env.REFRESH_TOKEN_EXPIRY || '10d';
-  const BRAIN_SERVICE_URL = (process.env.BRAIN_SERVICE_URL || 'http://localhost:8000').replace(/\/+$/, '');
+  const BRAIN_SERVICE_URL = (process.env.BRAIN_SERVICE_URL || (isProduction ? '' : 'http://localhost:8000')).replace(/\/+$/, '');
+  if (!BRAIN_SERVICE_URL) {
+    console.error('FATAL: BRAIN_SERVICE_URL is required in production.');
+    process.exit(1);
+  }
   const BRAIN_TIMEOUT_MS = parseInt(process.env.BRAIN_TIMEOUT_MS || '30000', 10);
-  const CORS_ORIGIN = process.env.CORS_ORIGIN || 'http://localhost:3000';
+  const CORS_ORIGIN = process.env.CORS_ORIGIN || (isProduction ? '' : 'http://localhost:3000');
+  if (!CORS_ORIGIN) {
+    console.error('FATAL: CORS_ORIGIN is required in production.');
+    process.exit(1);
+  }
 
   return {
     NODE_ENV,

@@ -46,7 +46,7 @@ export function getRefreshCookieOptions(expiresAt?: Date) {
   return {
     httpOnly: true,
     secure: isProd,
-    sameSite: (isProd ? 'strict' : 'lax') as 'strict' | 'lax',
+    sameSite: (isProd ? 'none' : 'lax') as 'none' | 'lax',
     maxAge,
     path: '/',
   };
@@ -60,7 +60,7 @@ export function getClearCookieOptions() {
   return {
     httpOnly: true,
     secure: isProd,
-    sameSite: (isProd ? 'strict' : 'lax') as 'strict' | 'lax',
+    sameSite: (isProd ? 'none' : 'lax') as 'none' | 'lax',
     path: '/',
   };
 }

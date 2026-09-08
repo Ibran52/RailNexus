@@ -6,7 +6,7 @@
   "description": "RailNexus Railway Maintenance Decision-Support Backend",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
     "test": "vitest run --fileParallelism=false",
     "lint": "tsc --noEmit"
   },

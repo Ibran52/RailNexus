@@ -1,5 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 
+export const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || '/api/v1').replace(/\/+$/, '');
+
 let accessToken: string | null = localStorage.getItem('railnexus_access_token');
 
 export const setAccessToken = (token: string | null) => {
@@ -19,7 +21,7 @@ export const getAccessToken = (): string | null => {
 };
 
 export const apiClient = axios.create({
-  baseURL: '/api/v1',
+  baseURL: apiBaseUrl,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -48,7 +50,7 @@ export const executeTokenRefresh = async (): Promise<string> => {
   refreshPromise = (async () => {
     try {
       const refreshResp = await axios.post(
-        '/api/v1/auth/refresh',
+        `${apiBaseUrl}/auth/refresh`,
         {},
         { withCredentials: true }
       );
