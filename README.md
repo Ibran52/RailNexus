@@ -4,7 +4,7 @@
 RailNexus — Intelligent Railway Maintenance Coordination & Decision Support System
 Human-In-The-Loop AI Decision Support System for Indian Railways (Central Railway: Mumbai CSMT ⟷ Pune JN Corridor)
 
-🏛️ System Architecture
+
                ENGINEERING / S&T / OHE DEPARTMENTS
                                 │
                                 │ (Submit Maintenance Requests)
@@ -49,6 +49,7 @@ Human-In-The-Loop AI Decision Support System for Indian Railways (Central Railwa
                                 │
                                 ↓
                       Immutable Audit Trail
+                      
 🚀 Quick Start (Running Locally)
 1. Start the RailNexus Python Brain (FastAPI)
 cd brain/optimization-service
