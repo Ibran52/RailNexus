@@ -1,6 +1,6 @@
 """
 data_loader.py — RailNexus Brain / core
-Loads and parses block_ready_mumbai_pune.csv into a clean DataFrame.
+Loads and parses the finalized train_movement.csv into a clean DataFrame.
 
 Rules:
   - Raw CSV is NEVER modified on disk.
@@ -16,7 +16,12 @@ from pathlib import Path
 
 import pandas as pd
 
-from config import CSV_PATH, REQUIRED_CSV_COLUMNS
+from config import (
+    CSV_PATH,
+    REQUIRED_CSV_COLUMNS,
+    SECTION_MASTER_PATH,
+    TRAIN_MASTER_PATH,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -54,13 +59,33 @@ def load_dataframe(csv_path: Path = CSV_PATH) -> pd.DataFrame:
     # Read everything as strings first — no silent coercion.
     df_raw = pd.read_csv(csv_path, dtype=str, low_memory=False)
 
-    # Column check
-    missing = [c for c in REQUIRED_CSV_COLUMNS if c not in df_raw.columns]
-    if missing:
-        raise ValueError(f"Required columns missing from CSV: {missing}")
+    # The finalized package stores movement facts separately from train and
+    # section attributes. Normalize that canonical schema into the columns
+    # consumed by the existing analysis engine.
+    canonical_columns = {
+        "train_number", "day", "from_station", "to_station",
+        "entry_time", "exit_time", "occupancy_duration_mins",
+        "train_id", "section_id",
+    }
+    if canonical_columns.issubset(df_raw.columns):
+        df = df_raw.copy()
 
-    # Work on a copy — never mutate df_raw reference
-    df = df_raw.copy()
+        train_master = pd.read_csv(TRAIN_MASTER_PATH, dtype=str, low_memory=False)
+        section_master = pd.read_csv(SECTION_MASTER_PATH, dtype=str, low_memory=False)
+
+        train_types = train_master.set_index("train_number")["train_type"]
+        section_lengths = section_master.set_index("section_id")["length_km"]
+        df["train_type"] = df["train_number"].map(train_types)
+        df["block_section_km"] = df["section_id"].map(section_lengths)
+        df["from_time"] = df["entry_time"]
+        df["to_time"] = df["exit_time"]
+        df["from_dt"] = "1900-01-01 " + df["entry_time"].astype(str).str.strip()
+        df["to_dt"] = "1900-01-01 " + df["exit_time"].astype(str).str.strip()
+    else:
+        missing = [c for c in REQUIRED_CSV_COLUMNS if c not in df_raw.columns]
+        if missing:
+            raise ValueError(f"Required columns missing from CSV: {missing}")
+        df = df_raw.copy()
 
     # Numeric columns
     df["train_number"]            = pd.to_numeric(df["train_number"], errors="coerce")
@@ -76,8 +101,8 @@ def load_dataframe(csv_path: Path = CSV_PATH) -> pd.DataFrame:
     for col in ("train_type", "from_station", "to_station"):
         df[col] = df[col].str.strip()
 
-    nat_from = int(df["from_dt"].isna().sum())
-    nat_to   = int(df["to_dt"].isna().sum())
+    nat_from = df["from_dt"].isna().sum()
+    nat_to   = df["to_dt"].isna().sum()
     if nat_from or nat_to:
         logger.warning("NaT in from_dt: %d | to_dt: %d — rows excluded from analysis",
                        nat_from, nat_to)

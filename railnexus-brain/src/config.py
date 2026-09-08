@@ -9,16 +9,29 @@ from pathlib import Path
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
 ROOT_DIR: Path = Path(__file__).parent.parent          # railnexus-brain/
-DATA_DIR: Path = ROOT_DIR / "data" / "raw"
-CSV_FILENAME: str = "block_ready_mumbai_pune.csv"
-CSV_PATH: Path = DATA_DIR / CSV_FILENAME
+DATA_DIR: Path = ROOT_DIR / "data"
+
+# Primary movement dataset (Brain main input — merged from finalized package)
+CSV_FILENAME: str = "train_movement.csv"
+CSV_PATH: Path = DATA_DIR / "movement" / CSV_FILENAME
+
+# Finalized dataset catalogue paths
+STATION_MASTER_PATH: Path   = DATA_DIR / "master"    / "station_master.csv"
+SECTION_MASTER_PATH: Path   = DATA_DIR / "master"    / "section_master.csv"
+TRAIN_MASTER_PATH: Path     = DATA_DIR / "master"    / "train_master.csv"
+TRAIN_SCHEDULE_PATH: Path   = DATA_DIR / "schedule"  / "train_schedule.csv"
+STATION_POINTS_PATH: Path   = DATA_DIR / "gis"       / "station_points.geojson"
+SECTION_SCHEMATIC_PATH: Path = DATA_DIR / "gis"      / "section_schematic.geojson"
+
+# Legacy raw backup (read-only, never active)
+LEGACY_CSV_PATH: Path = ROOT_DIR / "data" / "raw_backup_before_final_dataset" / "block_ready_mumbai_pune.csv"
 
 # ── Service metadata ──────────────────────────────────────────────────────────
 SERVICE_NAME: str = "railnexus-brain"
 SERVICE_VERSION: str = "1.0.0"
 API_PREFIX: str = "/api/v1/brain"
 
-DATASET_VERSION: str = "v1"
+DATASET_VERSION: str = "v2-finalized"
 ALGORITHM_VERSION: str = "PHASE_3_IMPACT_SCORING"
 
 

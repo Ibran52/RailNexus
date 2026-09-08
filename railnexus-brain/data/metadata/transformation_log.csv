@@ -1,0 +1,66 @@
+change
+station_master: CHP/Chhapi record corrected to CHG/Chinchpokli with verified coordinate reference
+section_master: corrected CHG endpoints and recomputed station-coordinate geodesic length_km
+train_master: train 12163 train_type derived from train_name token 'Exp'
+train_master: train 12164 train_type derived from train_name token 'Exp'
+schedule: removed 24 empty station artifact rows with no sequence/time/day data
+schedule: direction/chronology normalized for 51 trains using provided schedule timing evidence
+schedule: filled 82 missing arrival/departure values from paired movement data or same-stop paired time
+movement: direction-normalized reverse-time train 6501 day 2
+movement: direction-normalized reverse-time train 9222 day 2
+movement: direction-normalized reverse-time train 9406 day 2
+movement: direction-normalized reverse-time train 11008 day 1
+movement: direction-normalized reverse-time train 11010 day 1
+movement: direction-normalized reverse-time train 11012 day 2
+movement: direction-normalized reverse-time train 11014 day 2
+movement: direction-normalized reverse-time train 11018 day 2
+movement: direction-normalized reverse-time train 11020 day 2
+movement: direction-normalized reverse-time train 11020 day 3
+movement: direction-normalized reverse-time train 11024 day 2
+movement: direction-normalized reverse-time train 11026 day 1
+movement: direction-normalized reverse-time train 11028 day 2
+movement: direction-normalized reverse-time train 11028 day 3
+movement: direction-normalized reverse-time train 11030 day 1
+movement: direction-normalized reverse-time train 11036 day 2
+movement: direction-normalized reverse-time train 11042 day 2
+movement: direction-normalized reverse-time train 11044 day 3
+movement: direction-normalized reverse-time train 11050 day 1
+movement: direction-normalized reverse-time train 11088 day 1
+movement: direction-normalized reverse-time train 11090 day 1
+movement: direction-normalized reverse-time train 11092 day 1
+movement: direction-normalized reverse-time train 11096 day 1
+movement: direction-normalized reverse-time train 12116 day 2
+movement: direction-normalized reverse-time train 12124 day 1
+movement: direction-normalized reverse-time train 12126 day 1
+movement: direction-normalized reverse-time train 12128 day 1
+movement: direction-normalized reverse-time train 12164 day 2
+movement: direction-normalized reverse-time train 12220 day 2
+movement: direction-normalized reverse-time train 12263 day 1
+movement: direction-normalized reverse-time train 12526 day 1
+movement: direction-normalized reverse-time train 12528 day 2
+movement: direction-normalized reverse-time train 12702 day 2
+movement: direction-normalized reverse-time train 12939 day 1
+movement: direction-normalized reverse-time train 16210 day 2
+movement: direction-normalized reverse-time train 16332 day 2
+movement: direction-normalized reverse-time train 16340 day 2
+movement: direction-normalized reverse-time train 16352 day 2
+movement: direction-normalized reverse-time train 16382 day 3
+movement: direction-normalized reverse-time train 16506 day 2
+movement: direction-normalized reverse-time train 16508 day 2
+movement: direction-normalized reverse-time train 16530 day 2
+movement: direction-normalized reverse-time train 16532 day 2
+movement: direction-normalized reverse-time train 16534 day 2
+movement: direction-normalized reverse-time train 16614 day 3
+movement: direction-normalized reverse-time train 17018 day 2
+movement: direction-normalized reverse-time train 17032 day 2
+movement: direction-normalized reverse-time train 17204 day 2
+movement: direction-normalized reverse-time train 19311 day 1
+movement: direction-normalized reverse-time train 19567 day 2
+movement: direction-normalized reverse-time train 51028 day 1
+movement: direction-normalized reverse-time train 51028 day 2
+movement: direction-normalized reverse-time train 51030 day 1
+movement: direction-normalized reverse-time train 51030 day 2
+movement: direction-normalized reverse-time train 51034 day 1
+movement: direction-normalized reverse-time train 51034 day 2
+movement: swapped inverted entry/exit time pairs for 8 residual records after direction normalization
+movement: filled 41 missing timestamps from finalized timetable records

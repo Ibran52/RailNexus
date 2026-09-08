@@ -60,7 +60,7 @@ def make_df(rows: list[dict]) -> pd.DataFrame:
 
 @pytest.fixture(scope="session")
 def real_csv_path() -> Path:
-    return Path(__file__).parent.parent / "data" / "raw" / "block_ready_mumbai_pune.csv"
+    return Path(__file__).parent.parent / "data" / "movement" / "train_movement.csv"
 
 
 @pytest.fixture(scope="session")

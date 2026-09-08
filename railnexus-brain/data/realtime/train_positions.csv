@@ -1,0 +1,1 @@
+train_number,timestamp,latitude,longitude,speed_kmph,direction,current_section_id,nearest_station,position_accuracy_m,source,event_type,last_station,next_station,eta

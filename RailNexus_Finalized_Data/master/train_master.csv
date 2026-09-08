@@ -1,0 +1,104 @@
+train_id,train_number,train_name,train_type,from_station_code,to_station_code,record_quality
+1,6501,Yesvantpur - Ahmedabad Garib Rath Special,GR,YPR,ADI,SOURCE
+2,6502,Ahmedabad -Yesvantpur Garib Rath Special,GR,ADI,YPR,SOURCE
+3,9221,Porbandar Secunderabad Weekly Special,Exp,PBR,SC,SOURCE
+4,9222,Secunderabad-Porbandar Weekly Special,Exp,SC,PBR,SOURCE
+5,9405,Ahmedabad Yesvantpur (Weekly) Special,Exp,ADI,YPR,SOURCE
+6,9406,Yeshwantpur-Ahmedabad Special,Exp,YPR,ADI,SOURCE
+7,11007,Deccan Express,Exp,CSTM,PUNE,SOURCE
+8,11008,Deccan Express,Exp,PUNE,CSTM,SOURCE
+9,11009,Sinhagad Express,Exp,CSTM,PUNE,SOURCE
+10,11010,Sinhagad Express,Exp,PUNE,CSTM,SOURCE
+11,11011,Mahalaxmi Express,Exp,CSTM,KOP,SOURCE
+12,11012,Mahalaxmi Express,Exp,KOP,CSTM,SOURCE
+13,11013,Mumbai LTT-Coimbatore Express,Exp,LTT,CBE,SOURCE
+14,11014,Coimbatore Mumbai LTT Express,Exp,CBE,LTT,SOURCE
+15,11017,Chalukya Express,Exp,DR,YPR,SOURCE
+16,11018,Chalukya Express,Exp,YPR,DR,SOURCE
+17,11019,Konark Express,Exp,CSTM,BBS,SOURCE
+18,11020,Konark Express,Exp,BBS,CSTM,SOURCE
+19,11023,Sahyadri Express,Exp,CSTM,KOP,SOURCE
+20,11024,Sahyadri Express,Exp,KOP,CSTM,SOURCE
+21,11025,Manmad Pune Express(Via Nasik),Exp,MMR,PUNE,SOURCE
+22,11026,Pune Manmad Express,Exp,PUNE,MMR,SOURCE
+23,11027,Mumbai CST-Chennai Mail,Mail,CSTM,MAS,SOURCE
+24,11028,Chennai-Mumbai CST Mail,Mail,MAS,CSTM,SOURCE
+25,11029,Koyna Express,Exp,CSTM,KOP,SOURCE
+26,11030,Koyna Express,Exp,KOP,CSTM,SOURCE
+27,11035,Dadar-Mysore Sharavati Express,Exp,DR,MYS,SOURCE
+28,11036,Mysore-Dadar Sharavati Express,Exp,MYS,DR,SOURCE
+29,11041,Mumbai - Chennai Express,Exp,CSTM,MAS,SOURCE
+30,11042,ChennaiCentral-CST Mumbai Express,Exp,MAS,CSTM,SOURCE
+31,11043,MUMBAI LTT - MADURAI Exp,Exp,LTT,MDU,SOURCE
+32,11044,MADURAI - MUMBAI LTT Exp,Exp,MDU,LTT,SOURCE
+33,11049,Ahmedabad-Kolhapur Express,Exp,ADI,KOP,SOURCE
+34,11050,Kolhapur-Ahmedabad Express,Exp,KOP,ADI,SOURCE
+35,11087,Veraval Pune Express,Exp,VRL,PUNE,SOURCE
+36,11088,Pune Veraval Express,Exp,PUNE,VRL,SOURCE
+37,11089,BHAGAT KI KOTHI - PUNE Exp,Exp,BGKT,PUNE,SOURCE
+38,11090,PUNE - BHAGAT KI KOTHI Exp,Exp,PUNE,BGKT,SOURCE
+39,11091,BHUJ - PUNE Ahimsa Exp,Exp,BHUJ,PUNE,SOURCE
+40,11092,PUNE - BHUJ Ahimsa Exp,Exp,PUNE,BHUJ,SOURCE
+41,11095,Ahimsa Express,Exp,ADI,PUNE,SOURCE
+42,11096,Ahimsa Express,Exp,PUNE,ADI,SOURCE
+43,12115,Siddheshwar Express,SF,CSTM,SUR,SOURCE
+44,12116,Siddheshwar Express,SF,SUR,CSTM,SOURCE
+45,12123,Deccan Queen SF Express,SF,CSTM,PUNE,SOURCE
+46,12124,Deccan Queen SF Express,SF,PUNE,CSTM,SOURCE
+47,12125,Pragati Superfast Express,SF,CSTM,PUNE,SOURCE
+48,12126,Pragati Superfast Express,SF,PUNE,CSTM,SOURCE
+49,12127,MumbaiCST-Pune SF InterCity,SF,CSTM,PUNE,SOURCE
+50,12128,Pune-MumbaiCST Intercity Express,SF,PUNE,CSTM,SOURCE
+51,12163,DADAR - CHENNAI EGMORE SF Exp,Exp,DR,MS,DERIVED_FROM_EXISTING_TRAIN_NAME
+52,12164,DADAR - CHENNAI EGMORE SF Exp,Exp,MS,DR,DERIVED_FROM_EXISTING_TRAIN_NAME
+53,12219,Lokmanya Tilak (T)-Secunderabad AC Duronto Express,Drnt,LTT,SC,SOURCE
+54,12220,Secunderabad-Mumbai LTT AC Duronto Express,Drnt,SC,LTT,SOURCE
+55,12263,Pune - Hazrat Nizamuddin AC Duronto Express,Drnt,PUNE,NZM,SOURCE
+56,12264,Hazrat Nizamuddin-Pune AC Duronto Express,Drnt,NZM,PUNE,SOURCE
+57,12525,Indrayani SF Express,SF,CSTM,PUNE,SOURCE
+58,12526,Indrayani SF Express,SF,PUNE,CSTM,SOURCE
+59,12527,Mumbai CST-Latur Superfast Express.,SF,CSTM,LUR,SOURCE
+60,12528,Latur-Mumbai CST Superfast Express,SF,LUR,CSTM,SOURCE
+61,12701,Hussain Sagar Express,SF,CSTM,HYB,SOURCE
+62,12702,Hussain Sagar Express,SF,HYB,CSTM,SOURCE
+63,12750,Mumbai LTT-Visakhapatnam SF Express,SF,LTT,VSKP,SOURCE
+64,12939,Pune-Jaipur SF Express,SF,PUNE,JP,SOURCE
+65,12940,Jaipur-Pune SF Express,SF,JP,PUNE,SOURCE
+66,16209,Ajmer-Mysore Express,Exp,AII,MYS,SOURCE
+67,16210,Mysore-Ajmer Express,Exp,MYS,AII,SOURCE
+68,16331,MUMBAI CST - TRIVANDRUM Exp,Exp,CSTM,TVC,SOURCE
+69,16332,TRIVANDRUM - MUMBAI CST Exp,Exp,TVC,CSTM,SOURCE
+70,16339,MUMBAI CST - NAGERCOIL Exp,Exp,CSTM,NCJ,SOURCE
+71,16340,NAGERCOIL - MUMBAI CST Exp,Exp,NCJ,CSTM,SOURCE
+72,16351,MUMBAI CST - NAGERCOIL Balaji Exp,Exp,CSTM,NCJ,SOURCE
+73,16352,NAGERCOIL - MUMBAI CST Balaji Exp,Exp,NCJ,CSTM,SOURCE
+74,16381,Mumbai CST - Kanyakumari Express,Exp,CSTM,CAPE,SOURCE
+75,16382,Kanniyakumari-Mumbai CST Express,Exp,CAPE,CSTM,SOURCE
+76,16505,GANDHIDHAM - BANGALORE Exp,Exp,GIMB,SBC,SOURCE
+77,16506,BANGALORE - GANDHIDHAM Exp,Exp,SBC,GIMB,SOURCE
+78,16507,BHAGAT KI KOTHI - BANGALORE Exp,Exp,BGKT,SBC,SOURCE
+79,16508,BANGALORE - BHAGAT KI KOTHI Exp,Exp,SBC,JU,SOURCE
+80,16529,Udyan Express,Exp,CSTM,SBC,SOURCE
+81,16530,Udyan Express,Exp,SBC,CSTM,SOURCE
+82,16531,Garib Nawaz Express,Exp,AII,YPR,SOURCE
+83,16532,Garib Nawaz Express,Exp,YPR,AII,SOURCE
+84,16533,BHAGAT KI KOTHI - BANGALORE CITY Exp,Exp,BGKT,SBC,SOURCE
+85,16534,BANGALORE CITY - JODHPUR Exp,Exp,SBC,JU,SOURCE
+86,16613,RAJKOT - COIMBATORE Exp,Exp,RJT,CBE,SOURCE
+87,16614,COIMBATORE - RAJKOT Exp,Exp,CBE,RJT,SOURCE
+88,17017,Rajkot Secunderabad Express,Exp,RJT,SC,SOURCE
+89,17018,Secunderabad - Rajkot Express,Exp,SC,RJT,SOURCE
+90,17031,Mumbai CST-Hyderabad Express,Exp,CSTM,HYB,SOURCE
+91,17032,Hyderabad-Mumbai Express,Exp,HYB,CSTM,SOURCE
+92,17203,Bhavnagar(T)-Kakinada Town Express,Exp,BVC,CCT,SOURCE
+93,17204,Kakinada Town- Bhavnagar Express,Exp,CCT,BVC,SOURCE
+94,19311,Pune Indore Express,Exp,PUNE,INDB,SOURCE
+95,19312,Indore Pune Express,Exp,INDB,PUNE,SOURCE
+96,19567,TUTICORIN - OKHA Exp,Exp,TN,OKHA,SOURCE
+97,19568,OKHA - TUTICORIN Exp,Exp,OKHA,TN,SOURCE
+98,51027,MumbaiCST-Pandharpur Fast Passenger,Pass,CSTM,PVR,SOURCE
+99,51028,Pandharpur-Mumbai Fast Passenger,Pass,PVR,CSTM,SOURCE
+100,51029,Bijapur Fast Passenger,Pass,CSTM,BJP,SOURCE
+101,51030,Bijapur Mumbai Fast Passenger,Pass,BJP,CSTM,SOURCE
+102,51033,Mumbai Sainagar Shirdi Fast Pass(Via Daund),Pass,CSTM,SNSI,SOURCE
+103,51034,Sainagar Shirdi-Mumbai Fast Passenger(Via Daund),Pass,SNSI,CSTM,SOURCE

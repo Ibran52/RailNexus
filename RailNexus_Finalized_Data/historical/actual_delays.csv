@@ -1,0 +1,1 @@
+train_number,section_id,planned_entry,actual_entry,planned_exit,actual_exit,delay_minutes,delay_reason,maintenance_block_id,incident_id,weather_condition

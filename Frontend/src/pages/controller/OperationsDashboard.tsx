@@ -99,25 +99,7 @@ export const OperationsDashboard: React.FC = () => {
     (r) => r.status === RequestStatus.PENDING || r.status === RequestStatus.RECOMMENDED
   );
 
-  // Derive verified stations topology directly from section connections (Phase 13: Data-Derived Topology)
-  const orderedStationCodes = React.useMemo(() => {
-    if (!sections || sections.length === 0) return stations.slice(0, 10);
-    const ordered: string[] = [];
-    const visited = new Set<string>();
-    for (const sec of sections) {
-      if (sec.from_station && !visited.has(sec.from_station)) {
-        visited.add(sec.from_station);
-        ordered.push(sec.from_station);
-      }
-      if (sec.to_station && !visited.has(sec.to_station)) {
-        visited.add(sec.to_station);
-        ordered.push(sec.to_station);
-      }
-    }
-    return ordered.length > 0 ? ordered : stations;
-  }, [sections, stations]);
-
-  const schematicStations = orderedStationCodes.map((s) => ({
+  const schematicStations = stations.map((s) => ({
     code: s,
     name: s, // Verified station code only, no fabricated names
     isJunction: false, // Do not fabricate junction status without verified source
@@ -149,7 +131,7 @@ export const OperationsDashboard: React.FC = () => {
         trainNumber: trainNum,
         station: trainStation,
         isDelayed: Boolean(t.delay_minutes),
-        delayMinutes: t.delay_minutes || 0,
+        delayMinutes: t.delay_minutes,
       };
     }) || [];
 
@@ -287,10 +269,10 @@ export const OperationsDashboard: React.FC = () => {
                 </span>
                 <div className="flex items-baseline space-x-2 mt-0.5">
                   <span className="text-2xl font-bold font-mono text-slate-900">
-                    {dataStatus?.train_count ?? requests.length}
+                    {dataStatus?.train_count ?? 'MISSING DATA'}
                   </span>
                   <span className="text-xs text-slate-500">
-                    {dataStatus?.train_count !== undefined ? 'trains in timetable dataset' : 'monitored activities'}
+                    {dataStatus?.train_count !== undefined ? 'trains in timetable dataset' : 'not available'}
                   </span>
                 </div>
               </div>
@@ -313,7 +295,7 @@ export const OperationsDashboard: React.FC = () => {
                           )}
                         </div>
                         <span className="font-mono font-bold text-rose-600">
-                          +{t.delayMinutes || 0} min
+                          +{t.delayMinutes ?? 'MISSING DATA'} {t.delayMinutes !== undefined ? 'min' : ''}
                         </span>
                       </div>
                     ))

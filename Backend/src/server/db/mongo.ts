@@ -8,11 +8,11 @@ import dns from 'node:dns';
 import mongoose from 'mongoose';
 import { env } from '../config/env.js';
 
-// Resolve MongoDB Atlas SRV records reliably on Windows/local networks
+// Resolve MongoDB Atlas SRV records reliably on Windows/local networks.
 try {
   dns.setServers(['8.8.8.8', '1.1.1.1']);
 } catch {
-  // Ignore in restricted environments
+  // Ignore restricted environments and let mongoose report the connection error.
 }
 
 export async function connectDB(): Promise<void> {

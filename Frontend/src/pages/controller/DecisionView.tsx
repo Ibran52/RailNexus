@@ -24,9 +24,7 @@ export const DecisionView: React.FC = () => {
   const [showRejectModal, setShowRejectModal] = useState<boolean>(false);
   const [showModifyModal, setShowModifyModal] = useState<boolean>(false);
 
-  const [decisionReason, setDecisionReason] = useState<string>(
-    'Approved optimal coordinated maintenance block window with lowest network delay impact.'
-  );
+  const [decisionReason, setDecisionReason] = useState<string>('');
   const [modifyStart, setModifyStart] = useState<string>('');
   const [modifyEnd, setModifyEnd] = useState<string>('');
 
@@ -181,24 +179,15 @@ export const DecisionView: React.FC = () => {
 
           {/* Badges Strip (Screenshot 161855) */}
           <div className="flex flex-wrap items-center gap-2 pt-1">
-            <span className="px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-white text-slate-700 border border-slate-200">
-              Combined block
-            </span>
-            <span className="px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-white text-slate-700 border border-slate-200">
-              FIFO preserved on C-FIFO-01
-            </span>
-            <span className="px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-white text-slate-700 border border-slate-200">
-              Railway Board list applied on C-BOARD-01
-            </span>
-            <span className="px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-white text-slate-700 border border-slate-200">
-              No Temporary Speed Restriction
-            </span>
-            <span className="px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
-              Confidence: HIGH
-            </span>
-            <span className="px-2.5 py-1 rounded-md text-[11px] font-mono font-medium text-slate-400 bg-white border border-slate-200">
-              Last sync 28s ago
-            </span>
+              <span className="px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-white text-slate-700 border border-slate-200">
+                Dataset: {brainRun?.datasetVersion || 'MISSING DATA'}
+              </span>
+              <span className="px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-white text-slate-700 border border-slate-200">
+                Plan version: {brainRun?.planningVersion ?? 'MISSING DATA'}
+              </span>
+              <span className="px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-white text-slate-700 border border-slate-200">
+                Cascade: {brainRun?.cascadeStatus || 'MISSING DATA'}
+              </span>
           </div>
         </div>
 
@@ -255,40 +244,7 @@ export const DecisionView: React.FC = () => {
           factors={
             brainRun?.scoreBreakdown && brainRun.scoreBreakdown.length > 0
               ? brainRun.scoreBreakdown
-              : [
-                  {
-                    factor: 'Attributable Total Delay',
-                    raw_value: selectedCandidate?.direct_delay_minutes ?? 18,
-                    weight: 1.0,
-                    weighted_value: selectedCandidate?.direct_delay_minutes ?? 18,
-                    status: 'DATA_BACKED',
-                    source: 'Deterministic train movement conflict simulation',
-                  },
-                  {
-                    factor: 'Affected Trains Weight',
-                    raw_value: selectedCandidate?.affected_train_count ?? 3,
-                    weight: 0.0,
-                    weighted_value: 0.0,
-                    status: 'DISABLED',
-                    source: 'Phase 3 multi-factor weighting configuration',
-                  },
-                  {
-                    factor: 'Train Priority Weight',
-                    raw_value: 0,
-                    weight: 0.0,
-                    weighted_value: 0.0,
-                    status: 'DISABLED',
-                    source: 'Phase 3 multi-factor weighting configuration',
-                  },
-                  {
-                    factor: 'Maintenance Urgency',
-                    raw_value: 1,
-                    weight: 0.0,
-                    weighted_value: 0.0,
-                    status: 'DISABLED',
-                    source: 'Phase 3 multi-factor weighting configuration',
-                  },
-                ]
+              : []
           }
         />
 

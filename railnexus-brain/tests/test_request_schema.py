@@ -23,8 +23,8 @@ def _dt(h: int, m: int = 0) -> datetime:
 def _valid() -> dict:
     return {
         "request_id": "REQ-TEST",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": _dt(10),
         "latest_end": _dt(20),
@@ -37,7 +37,7 @@ def _valid() -> dict:
 def test_valid_request():
     req = AnalyzeRequest(**_valid())
     assert req.request_id == "REQ-TEST"
-    assert req.from_station == "KE"
+    assert req.from_station == "AKRD"
     assert req.duration_minutes == 120
 
 
@@ -86,7 +86,7 @@ def test_duration_exceeds_window_rejected():
 
 
 def test_same_stations_rejected():
-    data = _valid(); data["to_station"] = "KE"
+    data = _valid(); data["to_station"] = "AKRD"
     with pytest.raises(ValidationError):
         AnalyzeRequest(**data)
 

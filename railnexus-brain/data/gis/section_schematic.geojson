@@ -1,0 +1,1097 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 1,
+        "section_code": "CSMT_MSD",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            72.836903,
+            18.944481
+          ],
+          [
+            72.838561,
+            18.952385
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 2,
+        "section_code": "MSD_SNRD",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            72.838561,
+            18.952385
+          ],
+          [
+            72.839733,
+            18.962311
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 3,
+        "section_code": "SNRD_BY",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            72.839733,
+            18.962311
+          ],
+          [
+            72.833211,
+            18.97695
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 4,
+        "section_code": "BY_CHG",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            72.833211,
+            18.97695
+          ],
+          [
+            72.83266111111111,
+            18.98678888888889
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 5,
+        "section_code": "CHG_CRD",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            72.83266111111111,
+            18.98678888888889
+          ],
+          [
+            72.83265999999999,
+            18.9937
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 6,
+        "section_code": "CRD_PR",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            72.83265999999999,
+            18.9937
+          ],
+          [
+            72.83750400000001,
+            19.009045
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 7,
+        "section_code": "PR_DR",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            72.83750400000001,
+            19.009045
+          ],
+          [
+            72.842972,
+            19.017179
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 8,
+        "section_code": "DR_MTN",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            72.842972,
+            19.017179
+          ],
+          [
+            72.84984200000001,
+            19.027347
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 9,
+        "section_code": "MTN_SIN",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            72.84984200000001,
+            19.027347
+          ],
+          [
+            72.864262,
+            19.047725
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 10,
+        "section_code": "SIN_CLA",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            72.864262,
+            19.047725
+          ],
+          [
+            72.879375,
+            19.065221
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 11,
+        "section_code": "CLA_VVH",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            72.879375,
+            19.065221
+          ],
+          [
+            72.897181,
+            19.079258
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 12,
+        "section_code": "VVH_GC",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            72.897181,
+            19.079258
+          ],
+          [
+            72.908591,
+            19.085985
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 13,
+        "section_code": "GC_VK",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            72.908591,
+            19.085985
+          ],
+          [
+            72.928312,
+            19.11196
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 14,
+        "section_code": "VK_BND",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            72.928312,
+            19.11196
+          ],
+          [
+            72.93723505,
+            19.14200998
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 15,
+        "section_code": "BND_NHU",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            72.93723505,
+            19.14200998
+          ],
+          [
+            72.946683,
+            19.154646
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 16,
+        "section_code": "NHU_MLND",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            72.946683,
+            19.154646
+          ],
+          [
+            72.956933,
+            19.172355
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 17,
+        "section_code": "MLND_TNA",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            72.956933,
+            19.172355
+          ],
+          [
+            72.97541700000001,
+            19.185757
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 18,
+        "section_code": "TNA_KLVA",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            72.97541700000001,
+            19.185757
+          ],
+          [
+            72.997651,
+            19.196049
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 19,
+        "section_code": "KLVA_MBQ",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            72.997651,
+            19.196049
+          ],
+          [
+            73.02326,
+            19.190223
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 20,
+        "section_code": "MBQ_DIVA",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.02326,
+            19.190223
+          ],
+          [
+            73.041905,
+            19.188394
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 21,
+        "section_code": "DIVA_KOPR",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.041905,
+            19.188394
+          ],
+          [
+            73.077841,
+            19.211345
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 22,
+        "section_code": "KOPR_DI",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.077841,
+            19.211345
+          ],
+          [
+            73.0869,
+            19.218218
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 23,
+        "section_code": "DI_THK",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.0869,
+            19.218218
+          ],
+          [
+            73.09767799999999,
+            19.225768
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 24,
+        "section_code": "THK_KYN",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.09767799999999,
+            19.225768
+          ],
+          [
+            73.12974,
+            19.234716
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 25,
+        "section_code": "KYN_VLDI",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.12974,
+            19.234716
+          ],
+          [
+            73.149051,
+            19.229234
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 26,
+        "section_code": "VLDI_ULNR",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.149051,
+            19.229234
+          ],
+          [
+            73.163466,
+            19.218215
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 27,
+        "section_code": "ULNR_ABH",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.163466,
+            19.218215
+          ],
+          [
+            73.184756,
+            19.210382000000003
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 28,
+        "section_code": "ABH_BUD",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.184756,
+            19.210382000000003
+          ],
+          [
+            73.2390496,
+            19.1663883
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 29,
+        "section_code": "BUD_VGI",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.2390496,
+            19.1663883
+          ],
+          [
+            73.300967,
+            19.094299
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 30,
+        "section_code": "VGI_SHLU",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.300967,
+            19.094299
+          ],
+          [
+            73.317386,
+            19.062985
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 31,
+        "section_code": "SHLU_NRL",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.317386,
+            19.062985
+          ],
+          [
+            73.318955,
+            19.027113
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 32,
+        "section_code": "NRL_BVS",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.318955,
+            19.027113
+          ],
+          [
+            73.331324,
+            18.970655
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 33,
+        "section_code": "BVS_KJT",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.331324,
+            18.970655
+          ],
+          [
+            73.320691,
+            18.911158
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 34,
+        "section_code": "KJT_PDI",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.320691,
+            18.911158
+          ],
+          [
+            73.32055,
+            18.88409
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 35,
+        "section_code": "PDI_KAD",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.32055,
+            18.88409
+          ],
+          [
+            73.377469,
+            18.755087
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 36,
+        "section_code": "KAD_LNL",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.377469,
+            18.755087
+          ],
+          [
+            73.407657,
+            18.748883
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 37,
+        "section_code": "LNL_MVL",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.407657,
+            18.748883
+          ],
+          [
+            73.48064000000001,
+            18.743833
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 38,
+        "section_code": "MVL_KMST",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.48064000000001,
+            18.743833
+          ],
+          [
+            73.552352,
+            18.766938
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 39,
+        "section_code": "KMST_KNHE",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.552352,
+            18.766938
+          ],
+          [
+            73.59401600000001,
+            18.762352
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 40,
+        "section_code": "KNHE_VDN",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.59401600000001,
+            18.762352
+          ],
+          [
+            73.636925,
+            18.742927
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 41,
+        "section_code": "VDN_TGN",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.636925,
+            18.742927
+          ],
+          [
+            73.67201399999999,
+            18.734829
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 42,
+        "section_code": "TGN_GRWD",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.67201399999999,
+            18.734829
+          ],
+          [
+            73.69698199999999,
+            18.720585
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 43,
+        "section_code": "GRWD_BGWI",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.69698199999999,
+            18.720585
+          ],
+          [
+            73.708437,
+            18.700263
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 44,
+        "section_code": "BGWI_DEHR",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.708437,
+            18.700263
+          ],
+          [
+            73.734169,
+            18.680176
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 45,
+        "section_code": "DEHR_AKRD",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.734169,
+            18.680176
+          ],
+          [
+            73.76424399999999,
+            18.64812
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 46,
+        "section_code": "AKRD_CCH",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.76424399999999,
+            18.64812
+          ],
+          [
+            73.79139199999999,
+            18.638903
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 47,
+        "section_code": "CCH_PMP",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.79139199999999,
+            18.638903
+          ],
+          [
+            73.801991,
+            18.622977
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 48,
+        "section_code": "PMP_KSWD",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.801991,
+            18.622977
+          ],
+          [
+            73.8207010529,
+            18.607555174
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 49,
+        "section_code": "KSWD_DAPD",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.8207010529,
+            18.607555174
+          ],
+          [
+            73.83279900000001,
+            18.58005
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 50,
+        "section_code": "DAPD_KK",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.83279900000001,
+            18.58005
+          ],
+          [
+            73.840513,
+            18.56301
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 51,
+        "section_code": "KK_SVJR",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.840513,
+            18.56301
+          ],
+          [
+            73.851147,
+            18.531738
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "section_id": 52,
+        "section_code": "SVJR_PUNE",
+        "geometry_status": "DERIVED_STATION_TO_STATION_SCHEMATIC"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.851147,
+            18.531738
+          ],
+          [
+            73.873086,
+            18.529378
+          ]
+        ]
+      }
+    }
+  ]
+}

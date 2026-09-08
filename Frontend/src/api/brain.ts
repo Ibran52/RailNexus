@@ -1,5 +1,5 @@
 import { apiClient } from './client';
-import { CorridorSection, DatasetStatus } from '../types';
+import { CorridorSection, DatasetStatus, StationDetail } from '../types';
 
 export const brainApi = {
   async checkHealth(): Promise<{ status: string; url: string; details?: any }> {
@@ -19,6 +19,11 @@ export const brainApi = {
 
   async getSections(): Promise<CorridorSection[]> {
     const res = await apiClient.get('/brain/sections');
+    return res.data.data;
+  },
+
+  async getStationDetails(): Promise<StationDetail[]> {
+    const res = await apiClient.get('/brain/stations/details');
     return res.data.data;
   },
 };

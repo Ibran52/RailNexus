@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { controllerApi } from '../../api/controller';
+import { brainApi } from '../../api/brain';
 import { BrainRun, CandidateWindow, MaintenanceRequest } from '../../types';
 import { TopNav } from '../../components/TopNav';
 import { FooterAdvisory } from '../../components/FooterAdvisory';
 import { DelayTraceTimeline } from '../../components/DelayTraceTimeline';
 import { RailwayTrack } from '../../components/RailwayTrack';
+import { GeographicCorridorImpactMap } from '../../components/GeographicCorridorImpactMap';
 import { ArrowLeft, SlidersHorizontal, CheckCircle2 } from 'lucide-react';
 
 export const BlockImpactAnalysisPage: React.FC = () => {
@@ -16,14 +18,24 @@ export const BlockImpactAnalysisPage: React.FC = () => {
   const [request, setRequest] = useState<MaintenanceRequest | null>(null);
   const [brainRun, setBrainRun] = useState<BrainRun | null>(null);
   const [candidate, setCandidate] = useState<CandidateWindow | null>(null);
+  const [stationDetails, setStationDetails] = useState<import('../../types').StationDetail[]>([]);
+  const [sections, setSections] = useState<import('../../types').CorridorSection[]>([]);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     async function loadData() {
       if (!requestId) return;
       try {
-        const details = await controllerApi.getRequestDetails(requestId);
+        setLoadError(null);
+        const [details, stationData, sectionData] = await Promise.all([
+          controllerApi.getRequestDetails(requestId),
+          brainApi.getStationDetails(),
+          brainApi.getSections(),
+        ]);
         setRequest(details.request);
+        setStationDetails(stationData);
+        setSections(sectionData);
 
         let activeRun = details.activeAnalysis;
         if (!activeRun) {
@@ -44,6 +56,8 @@ export const BlockImpactAnalysisPage: React.FC = () => {
         } else if (activeRun?.recommendation) {
           setCandidate(activeRun.recommendation);
         }
+      } catch (err: any) {
+        setLoadError(err.message || 'Unable to load corridor impact analysis.');
       } finally {
         setIsLoading(false);
       }
@@ -52,9 +66,9 @@ export const BlockImpactAnalysisPage: React.FC = () => {
     loadData();
   }, [requestId, location.state]);
 
-  const immediateDelay = candidate?.direct_delay_minutes ?? candidate?.total_delay_minutes ?? 0;
-  const downstreamDelay = candidate?.downstream_delay_minutes ?? 0;
-  const totalDelay = immediateDelay + downstreamDelay;
+  const immediateDelay = candidate?.direct_delay_minutes ?? candidate?.total_delay_minutes;
+  const downstreamDelay = candidate?.downstream_delay_minutes;
+  const totalDelay = brainRun?.metrics?.total_delay_minutes ?? candidate?.total_delay_minutes;
 
   const windowStart = candidate?.start
     ? new Date(candidate.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
@@ -67,36 +81,18 @@ export const BlockImpactAnalysisPage: React.FC = () => {
   const activeDelayTrace =
     (candidate as any)?.delayTrace ||
     (candidate as any)?.delay_trace ||
-    (brainRun as any)?.delayTrace ||
-    (candidate?.affected_trains && candidate.affected_trains.length > 0
-      ? candidate.affected_trains.map((t: any) => ({
-          time: windowStart,
-          description: `Train ${typeof t === 'object' ? t.train_number || t.trainNumber : t} impact trace`,
-          delay_minutes: typeof t === 'object' ? t.delay_minutes || 0 : 0,
-          trace_level: 'DIRECT' as const,
-        }))
-      : []);
-
-  const trackTrains =
-    candidate?.affected_trains?.map((t: any, i: number) => ({
-      trainNumber: typeof t === 'object' ? t.train_number || t.trainNumber : t,
-      positionPercent: 20 + i * 30,
-      direction: 'UP' as const,
-      status: (t.delay_minutes ? 'DELAYED' : 'ON_TIME') as any,
-      delayMinutes: t.delay_minutes,
-    })) || [];
-
-  const trackConflicts =
-    candidate?.conflicts?.map((c: any, i: number) => ({
-      positionPercent: 30 + i * 25,
-      trainNumber: c.train_number || c.trainNumber,
-    })) || [];
+    (brainRun as any)?.delayTrace;
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-100">
       <TopNav />
 
       <main className="flex-1 max-w-[1700px] w-full mx-auto p-4 sm:p-6 flex flex-col gap-5">
+        {loadError && (
+          <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded">
+            {loadError}
+          </div>
+        )}
         {/* Top Header and Action Buttons (Screenshot 161911) */}
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -128,6 +124,13 @@ export const BlockImpactAnalysisPage: React.FC = () => {
           </div>
         </div>
 
+        <GeographicCorridorImpactMap
+          stations={stationDetails}
+          sections={sections}
+          request={request}
+          candidate={candidate}
+        />
+
         {/* Top 5 Metric Cards (Screenshot 161911) */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           {/* Card 1: Trains Affected */}
@@ -136,7 +139,7 @@ export const BlockImpactAnalysisPage: React.FC = () => {
               Trains Affected
             </span>
             <span className="text-2xl font-bold font-mono text-slate-900 mt-1">
-              {candidate?.affected_train_count ?? candidate?.affected_trains?.length ?? 0}
+              {candidate?.affected_train_count ?? candidate?.affected_trains?.length ?? 'MISSING DATA'}
             </span>
           </div>
 
@@ -146,7 +149,7 @@ export const BlockImpactAnalysisPage: React.FC = () => {
               Immediate Delay
             </span>
             <span className="text-2xl font-bold font-mono text-emerald-600 mt-1">
-              {immediateDelay} min
+              {immediateDelay ?? 'MISSING DATA'} {immediateDelay !== undefined ? 'min' : ''}
             </span>
           </div>
 
@@ -156,7 +159,7 @@ export const BlockImpactAnalysisPage: React.FC = () => {
               Downstream Delay
             </span>
             <span className="text-2xl font-bold font-mono text-emerald-600 mt-1">
-              {downstreamDelay} min
+              {downstreamDelay ?? 'MISSING DATA'} {downstreamDelay !== undefined ? 'min' : ''}
             </span>
           </div>
 
@@ -166,7 +169,7 @@ export const BlockImpactAnalysisPage: React.FC = () => {
               Total Delay
             </span>
             <span className="text-2xl font-bold font-mono text-emerald-600 mt-1">
-              {totalDelay} min
+              {totalDelay ?? 'MISSING DATA'} {totalDelay !== undefined ? 'min' : ''}
             </span>
           </div>
 
@@ -196,7 +199,7 @@ export const BlockImpactAnalysisPage: React.FC = () => {
                   <span className="text-xs text-slate-500">min</span>
                 </div>
                 <span className="text-[10px] text-slate-400 mt-1 block">
-                  {candidate?.affected_trains?.length || 0} trains held/rerouted
+                  {candidate?.affected_trains?.length ?? 'MISSING DATA'} trains held/rerouted
                 </span>
               </div>
 
@@ -251,14 +254,14 @@ export const BlockImpactAnalysisPage: React.FC = () => {
               blocks={[
                 {
                   id: 'blk-rec',
-                  department: request?.department || 'COORDINATED',
+                  department: request?.department || 'MISSING DATA',
                   fromStationIndex: 0,
                   toStationIndex: 1,
                   label: `${candidate?.option_label || 'WINDOW'} (${windowText})`,
                 },
               ]}
-              trains={trackTrains}
-              conflicts={trackConflicts}
+              trains={[]}
+              conflicts={[]}
               directionLabel="PROPAGATION TRACE"
               height={85}
             />
@@ -271,7 +274,7 @@ export const BlockImpactAnalysisPage: React.FC = () => {
                 </h4>
                 <span className="flex items-center gap-1 text-[11px] font-mono text-emerald-700 font-bold bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
                   <CheckCircle2 className="h-3.5 w-3.5" />
-                  <span>Feasible</span>
+                  <span>{candidate?.feasibility || 'NOT IMPLEMENTED'}</span>
                 </span>
               </div>
 
@@ -282,19 +285,19 @@ export const BlockImpactAnalysisPage: React.FC = () => {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-slate-500">Maintenance:</span>
-                  <span className="font-semibold text-slate-800">Feasible</span>
+                    <span className="font-semibold text-slate-800">{candidate?.feasibility || 'NOT IMPLEMENTED'}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-slate-500">Impact:</span>
                   <span className="font-bold text-emerald-700 font-mono">
                     {candidate?.impact_score !== undefined
                       ? `Score: ${candidate.impact_score}`
-                      : candidate?.is_recommended ? 'Lower' : 'Elevated'}
+                      : 'MISSING DATA'}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-slate-500">Combined:</span>
-                  <span className="font-medium text-slate-800">{request?.department || 'Coordinated'}</span>
+                  <span className="font-medium text-slate-800">NOT IMPLEMENTED</span>
                 </div>
               </div>
 

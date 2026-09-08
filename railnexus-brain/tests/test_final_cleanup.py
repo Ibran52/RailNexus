@@ -49,8 +49,8 @@ def _intervals_overlap(s1: str, e1: str, s2: str, e2: str) -> bool:
 def test_01_single_request_alternatives(client):
     body = {
         "request_id": "REQ-SINGLE-ALTS",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T18:00:00",
@@ -74,8 +74,8 @@ def test_01_single_request_alternatives(client):
 def test_02_same_section_joint_alt_overlapping_other_excluded(client):
     body = {
         "request_id": "REQ-A",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": "1900-01-01T11:00:00",
         "latest_end": "1900-01-01T16:00:00",
@@ -83,8 +83,8 @@ def test_02_same_section_joint_alt_overlapping_other_excluded(client):
             "pending_requests": [
                 {
                     "request_id": "REQ-B",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "duration_minutes": 120,
                     "earliest_start": "1900-01-01T11:00:00",
                     "latest_end": "1900-01-01T16:00:00",
@@ -118,8 +118,8 @@ def test_02_same_section_joint_alt_overlapping_other_excluded(client):
 def test_03_same_section_joint_alt_non_overlapping_remains(client):
     body = {
         "request_id": "REQ-1",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T17:00:00",
@@ -127,8 +127,8 @@ def test_03_same_section_joint_alt_non_overlapping_remains(client):
             "pending_requests": [
                 {
                     "request_id": "REQ-2",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "duration_minutes": 60,
                     "earliest_start": "1900-01-01T10:00:00",
                     "latest_end": "1900-01-01T17:00:00",
@@ -157,8 +157,8 @@ def test_03_same_section_joint_alt_non_overlapping_remains(client):
 def test_04_different_section_alt_may_overlap_in_time(client):
     body = {
         "request_id": "REQ-SEC-1",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": "1900-01-01T11:00:00",
         "latest_end": "1900-01-01T15:00:00",
@@ -190,8 +190,8 @@ def test_04_different_section_alt_may_overlap_in_time(client):
 def test_05_alt_overlapping_fixed_plan_excluded(client):
     body = {
         "request_id": "REQ-WITH-FP",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T11:00:00",
         "latest_end": "1900-01-01T16:00:00",
@@ -200,8 +200,8 @@ def test_05_alt_overlapping_fixed_plan_excluded(client):
             "fixed_plans": [
                 {
                     "request_id": "FP-LOCKED",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "allocated_start": "1900-01-01T11:00:00",
                     "allocated_end": "1900-01-01T13:00:00",
                     "status": "APPROVED",
@@ -253,8 +253,8 @@ def test_06_alt_with_train_already_inside_excluded(client):
 def test_07_alt_with_entry_blocked_included(client):
     body = {
         "request_id": "REQ-ENTRY-ALT",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": "1900-01-01T08:00:00",
         "latest_end": "1900-01-01T18:00:00",
@@ -275,8 +275,8 @@ def test_07_alt_with_entry_blocked_included(client):
 def test_08_invalid_request_status_rejected(client):
     body = {
         "request_id": "REQ-INVALID-STATUS",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": "1900-01-01T11:00:00",
         "latest_end": "1900-01-01T13:00:00",
@@ -284,8 +284,8 @@ def test_08_invalid_request_status_rejected(client):
             "pending_requests": [
                 {
                     "request_id": "REQ-BAD",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "duration_minutes": 60,
                     "earliest_start": "1900-01-01T11:00:00",
                     "latest_end": "1900-01-01T13:00:00",
@@ -314,8 +314,8 @@ def test_09_valid_request_status_accepted(client):
     for st in valid_statuses:
         body = {
             "request_id": f"REQ-{st}",
-            "from_station": "KE",
-            "to_station": "ATG",
+            "from_station": "AKRD",
+            "to_station": "CCH",
             "duration_minutes": 120,
             "earliest_start": "1900-01-01T11:00:00",
             "latest_end": "1900-01-01T13:00:00",
@@ -323,8 +323,8 @@ def test_09_valid_request_status_accepted(client):
                 "pending_requests": [
                     {
                         "request_id": f"REQ-ITEM-{st}",
-                        "from_station": "KE",
-                        "to_station": "ATG",
+                        "from_station": "AKRD",
+                        "to_station": "CCH",
                         "duration_minutes": 60,
                         "earliest_start": "1900-01-01T11:00:00",
                         "latest_end": "1900-01-01T13:00:00",
@@ -344,8 +344,8 @@ def test_10_backend_planning_mode_echoed(client):
     for mode in ("INITIAL", "REPLAN"):
         body = {
             "request_id": "REQ-MODE",
-            "from_station": "KE",
-            "to_station": "ATG",
+            "from_station": "AKRD",
+            "to_station": "CCH",
             "duration_minutes": 120,
             "earliest_start": "1900-01-01T11:00:00",
             "latest_end": "1900-01-01T13:00:00",
@@ -366,8 +366,8 @@ def test_10_backend_planning_mode_echoed(client):
 def test_11_backend_plan_version_echoed(client):
     body = {
         "request_id": "REQ-V7",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": "1900-01-01T11:00:00",
         "latest_end": "1900-01-01T13:00:00",
@@ -389,8 +389,8 @@ def test_11_backend_plan_version_echoed(client):
 def test_12_regression_single_request_api(client):
     body = {
         "request_id": "REQ-LEGACY",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": "1900-01-01T11:00:00",
         "latest_end": "1900-01-01T15:00:00",
@@ -412,8 +412,8 @@ def test_12_regression_single_request_api(client):
 def test_13_regression_fixed_plan_protection(client):
     body = {
         "request_id": "REQ-FP-PROT",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": "1900-01-01T11:00:00",
         "latest_end": "1900-01-01T16:00:00",
@@ -422,8 +422,8 @@ def test_13_regression_fixed_plan_protection(client):
             "fixed_plans": [
                 {
                     "request_id": "FP-LOCK",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "allocated_start": "1900-01-01T11:00:00",
                     "allocated_end": "1900-01-01T13:00:00",
                     "status": "APPROVED",
@@ -447,8 +447,8 @@ def test_13_regression_fixed_plan_protection(client):
 def test_14_regression_joint_planner_mutual_exclusion(client):
     body = {
         "request_id": "REQ-ME-1",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T11:00:00",
         "latest_end": "1900-01-01T15:00:00",
@@ -456,8 +456,8 @@ def test_14_regression_joint_planner_mutual_exclusion(client):
             "pending_requests": [
                 {
                     "request_id": "REQ-ME-2",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "duration_minutes": 60,
                     "earliest_start": "1900-01-01T11:00:00",
                     "latest_end": "1900-01-01T15:00:00",
@@ -480,8 +480,8 @@ def test_14_regression_joint_planner_mutual_exclusion(client):
 def test_15_regression_bundling(client):
     body = {
         "request_id": "REQ-B1",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T11:00:00",
         "latest_end": "1900-01-01T15:00:00",
@@ -489,8 +489,8 @@ def test_15_regression_bundling(client):
             "pending_requests": [
                 {
                     "request_id": "REQ-B2",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "duration_minutes": 60,
                     "earliest_start": "1900-01-01T11:00:00",
                     "latest_end": "1900-01-01T15:00:00",

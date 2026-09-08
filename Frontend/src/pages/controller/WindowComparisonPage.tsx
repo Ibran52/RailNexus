@@ -50,10 +50,10 @@ export const WindowComparisonPage: React.FC = () => {
         if (primaryRec && primaryRec.start && primaryRec.end) {
           rawOptions.push({
             ...primaryRec,
-            conflict_count: primaryRec.conflict_count ?? activeRun?.metrics?.conflict_count ?? activeRun?.conflicts?.length ?? 0,
-            direct_delay_minutes: primaryRec.direct_delay_minutes ?? activeRun?.metrics?.direct_delay_minutes ?? 0,
-            total_delay_minutes: primaryRec.total_delay_minutes ?? activeRun?.metrics?.total_delay_minutes ?? activeRun?.metrics?.direct_delay_minutes ?? 0,
-            affected_train_count: primaryRec.affected_train_count ?? activeRun?.metrics?.affected_train_count ?? 0,
+            conflict_count: primaryRec.conflict_count ?? activeRun?.metrics?.conflict_count ?? activeRun?.conflicts?.length,
+            direct_delay_minutes: primaryRec.direct_delay_minutes ?? activeRun?.metrics?.direct_delay_minutes,
+            total_delay_minutes: primaryRec.total_delay_minutes ?? activeRun?.metrics?.total_delay_minutes ?? activeRun?.metrics?.direct_delay_minutes,
+            affected_train_count: primaryRec.affected_train_count ?? activeRun?.metrics?.affected_train_count,
             affected_trains: primaryRec.affected_trains ?? activeRun?.affected_trains ?? [],
             conflicts: primaryRec.conflicts ?? activeRun?.conflicts ?? [],
             is_recommended: true,
@@ -65,10 +65,10 @@ export const WindowComparisonPage: React.FC = () => {
             if (alt && alt.start && alt.end) {
               rawOptions.push({
                 ...alt,
-                conflict_count: alt.conflict_count ?? alt.conflicts?.length ?? 0,
-                direct_delay_minutes: alt.direct_delay_minutes ?? alt.total_delay_minutes ?? 0,
-                total_delay_minutes: alt.total_delay_minutes ?? alt.direct_delay_minutes ?? 0,
-                affected_train_count: alt.affected_train_count ?? alt.affected_trains?.length ?? 0,
+                conflict_count: alt.conflict_count ?? alt.conflicts?.length,
+                direct_delay_minutes: alt.direct_delay_minutes ?? alt.total_delay_minutes,
+                total_delay_minutes: alt.total_delay_minutes ?? alt.direct_delay_minutes,
+                affected_train_count: alt.affected_train_count ?? alt.affected_trains?.length,
                 is_recommended: false,
               });
             }
@@ -118,25 +118,27 @@ export const WindowComparisonPage: React.FC = () => {
       case 'window':
         return formatWindow(cand.start, cand.end);
       case 'completion':
-        return 'Feasible';
+        return cand.feasibility || 'NOT IMPLEMENTED';
       case 'trains':
-        return cand.affected_train_count ?? cand.affected_trains?.length ?? 0;
+        return cand.affected_train_count ?? cand.affected_trains?.length ?? 'MISSING DATA';
       case 'delay':
-        return cand.direct_delay_minutes ?? cand.total_delay_minutes ?? 0;
+        return cand.direct_delay_minutes ?? cand.total_delay_minutes ?? 'MISSING DATA';
       case 'priorityTrains':
         return cand.priority_trains_affected !== undefined
           ? (cand.priority_trains_affected === 0 ? 'None' : cand.priority_trains_affected)
-          : 'None';
+          : 'MISSING DATA';
       case 'conflicts':
-        return cand.conflict_count ?? cand.conflicts?.length ?? 0;
+        return cand.conflict_count ?? cand.conflicts?.length ?? 'MISSING DATA';
       case 'tsr':
-        return cand.speed_restriction_required ? 'Required — speed limit applied' : 'Not required';
+        return cand.speed_restriction_required === undefined
+          ? 'NOT IMPLEMENTED'
+          : cand.speed_restriction_required ? 'Required — speed limit applied' : 'Not required';
       case 'combined':
-        return request?.department || 'Coordinated';
+        return 'NOT IMPLEMENTED';
       case 'overallImpact':
         return cand.impact_score !== undefined
           ? `Score: ${cand.impact_score}`
-          : cand.is_recommended ? 'Lower' : 'Elevated';
+          : 'MISSING DATA';
       case 'status':
         return cand.is_recommended ? 'Recommended' : '—';
       default:

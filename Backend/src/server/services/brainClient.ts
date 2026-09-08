@@ -135,6 +135,30 @@ class BrainClient {
     }
   }
 
+  async getStationDetails(): Promise<Array<{ station_code: string; station_name: string; latitude: number; longitude: number; source?: string }>> {
+    try {
+      const resp = await this.client.get('/api/v1/brain/stations/details');
+      return resp.data;
+    } catch (error: any) {
+      const err: AppError = new Error(`Failed to retrieve station coordinates from Brain: ${error.message}`);
+      err.statusCode = 503;
+      err.code = ErrorCode.BRAIN_UNAVAILABLE;
+      throw err;
+    }
+  }
+
+  async getSectionGeometry(): Promise<unknown> {
+    try {
+      const resp = await this.client.get('/api/v1/brain/section-geometry');
+      return resp.data;
+    } catch (error: any) {
+      const err: AppError = new Error(`Failed to retrieve section geometry from Brain: ${error.message}`);
+      err.statusCode = 503;
+      err.code = ErrorCode.BRAIN_UNAVAILABLE;
+      throw err;
+    }
+  }
+
   /**
    * Retrieves verified corridor block sections from the Brain microservice.
    */

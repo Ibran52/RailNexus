@@ -54,3 +54,21 @@ export async function getBrainSections(_req: Request, res: Response, next: NextF
   }
 }
 
+export async function getBrainStationDetails(_req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    const stations = await brainClient.getStationDetails();
+    res.status(200).json({ success: true, data: stations });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function getBrainSectionGeometry(_req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    const geometry = await brainClient.getSectionGeometry();
+    res.status(200).json({ success: true, data: geometry });
+  } catch (err) {
+    next(err);
+  }
+}
+

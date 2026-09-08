@@ -33,8 +33,8 @@ def _intervals_overlap(s1: str, e1: str, s2: str, e2: str) -> bool:
 def test_single_request_empty_planning_state(test_client):
     body = {
         "request_id": "REQ-S1",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T20:00:00",
@@ -60,8 +60,8 @@ def test_single_request_empty_planning_state(test_client):
 def test_two_requests_same_section_no_overlap(test_client):
     body = {
         "request_id": "REQ-A",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T16:00:00",
@@ -70,8 +70,8 @@ def test_two_requests_same_section_no_overlap(test_client):
             "pending_requests": [
                 {
                     "request_id": "REQ-B",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "duration_minutes": 120,
                     "earliest_start": "1900-01-01T10:00:00",
                     "latest_end": "1900-01-01T16:00:00",
@@ -104,8 +104,8 @@ def test_fixed_plan_protection(test_client):
     # Fixed plan locked at 10:00 to 12:00 on KE->ATG
     body = {
         "request_id": "REQ-NEW",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T18:00:00",
@@ -115,8 +115,8 @@ def test_fixed_plan_protection(test_client):
             "fixed_plans": [
                 {
                     "request_id": "REQ-FIXED-01",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "allocated_start": "1900-01-01T10:00:00",
                     "allocated_end": "1900-01-01T12:00:00",
                     "status": "APPROVED",
@@ -142,8 +142,8 @@ def test_replanning_joint_reoptimization(test_client):
     # REQ-A was previously RECOMMENDED, now REQ-B arrives
     body = {
         "request_id": "REQ-B",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T12:00:00",
         "latest_end": "1900-01-01T16:00:00",
@@ -153,8 +153,8 @@ def test_replanning_joint_reoptimization(test_client):
             "pending_requests": [
                 {
                     "request_id": "REQ-A",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "duration_minutes": 60,
                     "earliest_start": "1900-01-01T12:00:00",
                     "latest_end": "1900-01-01T16:00:00",
@@ -184,8 +184,8 @@ def test_sequential_arrival_simulation(test_client):
     # Step 1: Request A arrives alone
     r1 = test_client.post("/api/v1/brain/analyze", json={
         "request_id": "REQ-1",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T18:00:00",
@@ -197,8 +197,8 @@ def test_sequential_arrival_simulation(test_client):
     # Step 2: Request B arrives at 3:00 PM
     r2 = test_client.post("/api/v1/brain/analyze", json={
         "request_id": "REQ-2",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T18:00:00",
@@ -207,8 +207,8 @@ def test_sequential_arrival_simulation(test_client):
             "pending_requests": [
                 {
                     "request_id": "REQ-1",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "duration_minutes": 60,
                     "earliest_start": "1900-01-01T10:00:00",
                     "latest_end": "1900-01-01T18:00:00",
@@ -224,8 +224,8 @@ def test_sequential_arrival_simulation(test_client):
     # Step 3: Request C arrives at 9:00 PM
     r3 = test_client.post("/api/v1/brain/analyze", json={
         "request_id": "REQ-3",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T18:00:00",
@@ -234,16 +234,16 @@ def test_sequential_arrival_simulation(test_client):
             "pending_requests": [
                 {
                     "request_id": "REQ-1",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "duration_minutes": 60,
                     "earliest_start": "1900-01-01T10:00:00",
                     "latest_end": "1900-01-01T18:00:00",
                 },
                 {
                     "request_id": "REQ-2",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "duration_minutes": 60,
                     "earliest_start": "1900-01-01T10:00:00",
                     "latest_end": "1900-01-01T18:00:00",
@@ -267,8 +267,8 @@ def test_sequential_arrival_simulation(test_client):
 def test_deduplicate_triggering_request(test_client):
     body = {
         "request_id": "REQ-DUP",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T20:00:00",
@@ -276,8 +276,8 @@ def test_deduplicate_triggering_request(test_client):
             "pending_requests": [
                 {
                     "request_id": "REQ-DUP",  # identical ID
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "duration_minutes": 120,
                     "earliest_start": "1900-01-01T10:00:00",
                     "latest_end": "1900-01-01T20:00:00",
@@ -299,8 +299,8 @@ def test_partial_plan_unfeasible_request(test_client):
     # REQ-BLOCKED has only 10:00 to 12:00, but a fixed plan occupies that exact time
     body = {
         "request_id": "REQ-OK",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T14:00:00",
         "latest_end": "1900-01-01T18:00:00",
@@ -308,8 +308,8 @@ def test_partial_plan_unfeasible_request(test_client):
             "pending_requests": [
                 {
                     "request_id": "REQ-BLOCKED",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "duration_minutes": 120,
                     "earliest_start": "1900-01-01T10:00:00",
                     "latest_end": "1900-01-01T12:00:00",
@@ -318,8 +318,8 @@ def test_partial_plan_unfeasible_request(test_client):
             "fixed_plans": [
                 {
                     "request_id": "REQ-BLOCKING-FIXED",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "allocated_start": "1900-01-01T10:00:00",
                     "allocated_end": "1900-01-01T12:00:00",
                     "status": "APPROVED",
@@ -342,8 +342,8 @@ def test_partial_plan_unfeasible_request(test_client):
 def test_bundling_opportunity_analysis(test_client):
     body = {
         "request_id": "REQ-B1",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T18:00:00",
@@ -351,8 +351,8 @@ def test_bundling_opportunity_analysis(test_client):
             "pending_requests": [
                 {
                     "request_id": "REQ-B2",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "duration_minutes": 60,
                     "earliest_start": "1900-01-01T10:00:00",
                     "latest_end": "1900-01-01T18:00:00",
@@ -379,8 +379,8 @@ def test_different_sections_independent_planning(test_client):
     # Two requests on different sections can overlap in time if optimal
     body = {
         "request_id": "REQ-SEC1",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T14:00:00",
@@ -412,8 +412,8 @@ def test_different_sections_independent_planning(test_client):
 def test_backend_owned_version_and_mode(test_client):
     body = {
         "request_id": "REQ-V7",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T14:00:00",

@@ -1,0 +1,6 @@
+dataset,rows_before,rows_final,columns_final,missing_cells_final,duplicate_rows_final,status
+station_master,53,53,7,0,0,VALIDATED_NO_MISSING_NO_DUPLICATES
+section_master,52,52,9,0,0,VALIDATED_NO_MISSING_NO_DUPLICATES
+train_master,103,103,7,0,0,VALIDATED_NO_MISSING_NO_DUPLICATES
+train_schedule,4311,4287,8,0,0,VALIDATED_NO_MISSING_NO_DUPLICATES
+train_movement,3937,3937,14,0,0,VALIDATED_NO_MISSING_NO_DUPLICATES

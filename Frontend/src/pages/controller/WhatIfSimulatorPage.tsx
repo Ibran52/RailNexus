@@ -9,8 +9,8 @@ import { Play, RotateCcw, AlertTriangle, CheckCircle2, ArrowRight } from 'lucide
 export const WhatIfSimulatorPage: React.FC = () => {
   const [requests, setRequests] = useState<MaintenanceRequest[]>([]);
   const [selectedRequestId, setSelectedRequestId] = useState<string>('');
-  const [proposedStart, setProposedStart] = useState<string>('1900-01-01T11:30:00');
-  const [proposedEnd, setProposedEnd] = useState<string>('1900-01-01T14:00:00');
+  const [proposedStart, setProposedStart] = useState<string>('');
+  const [proposedEnd, setProposedEnd] = useState<string>('');
   const [simulationResult, setSimulationResult] = useState<any | null>(null);
   const [isSimulating, setIsSimulating] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -31,7 +31,10 @@ export const WhatIfSimulatorPage: React.FC = () => {
   }, []);
 
   const handleSimulate = async () => {
-    if (!selectedRequestId) return;
+    if (!selectedRequestId || !proposedStart || !proposedEnd) {
+      setError('Select a request and provide both scenario timestamps.');
+      return;
+    }
     try {
       setIsSimulating(true);
       setError(null);
@@ -210,21 +213,13 @@ export const WhatIfSimulatorPage: React.FC = () => {
               blocks={[
                 {
                   id: 'sim-block',
-                  department: activeRequest?.department || 'COORDINATED',
+                  department: activeRequest?.department || 'MISSING DATA',
                   fromStationIndex: 0,
                   toStationIndex: 1,
                   label: 'PROPOSED SIMULATED BLOCK (SANDBOX)',
                 },
               ]}
-              trains={
-                simulationResult?.affected_trains?.map((t: any, i: number) => ({
-                  trainNumber: typeof t === 'object' ? t.train_number || t.trainNumber : t,
-                  positionPercent: 25 + i * 35,
-                  direction: 'UP' as const,
-                  status: (t.delay_minutes ? 'DELAYED' : 'ON_TIME') as any,
-                  delayMinutes: t.delay_minutes,
-                })) || []
-              }
+              trains={[]}
               directionLabel="WHAT-IF RUNTIME SIMULATION"
             />
 
@@ -253,7 +248,7 @@ export const WhatIfSimulatorPage: React.FC = () => {
                     <div className="text-xl font-bold font-mono text-slate-900 mt-0.5">
                       {simulationResult.recommendation?.direct_delay_minutes ??
                         simulationResult.direct_delay_minutes ??
-                        0}{' '}
+                        'MISSING DATA'}{' '}
                       min
                     </div>
                   </div>
@@ -272,14 +267,16 @@ export const WhatIfSimulatorPage: React.FC = () => {
                     <div className="text-xl font-bold font-mono text-slate-900 mt-0.5">
                       {simulationResult.conflict_count ??
                         simulationResult.conflicts?.length ??
-                        0}
+                        'MISSING DATA'}
                     </div>
                   </div>
 
                   <div className="p-3 bg-slate-50 rounded border border-slate-200">
                     <span className="text-[10px] font-mono uppercase text-slate-400">Feasibility</span>
                     <div className="text-sm font-bold text-emerald-700 mt-1 uppercase font-mono">
-                      {simulationResult.is_feasible !== false ? 'Feasible' : 'Infeasible'}
+                      {simulationResult.is_feasible === undefined
+                        ? 'MISSING DATA'
+                        : simulationResult.is_feasible ? 'Feasible' : 'Infeasible'}
                     </div>
                   </div>
                 </div>

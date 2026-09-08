@@ -91,9 +91,9 @@ export interface CandidateWindow {
   option_label?: string; // Option A, Option B, etc.
   start: string;
   end: string;
-  impact_score: number;
-  conflict_count: number;
-  direct_delay_minutes: number;
+  impact_score?: number;
+  conflict_count?: number;
+  direct_delay_minutes?: number;
   secondary_delay_minutes?: number;
   total_delay_minutes?: number;
   downstream_delay_minutes?: number;
@@ -213,10 +213,19 @@ export interface DatasetStatus {
 }
 
 export interface CorridorSection {
+  section_id?: string | number;
   from_station: string;
   to_station: string;
   block_section_km?: number;
   avg_duration_mins?: number;
   occupancy_duration_mins?: number;
+}
+
+export interface StationDetail {
+  station_code: string;
+  station_name?: string;
+  latitude: number;
+  longitude: number;
+  source?: string;
 }
 

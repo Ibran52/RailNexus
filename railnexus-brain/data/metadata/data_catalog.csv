@@ -1,0 +1,15 @@
+path,row_count,status,notes
+master/station_master.csv,53,AVAILABLE_AND_VALIDATED,Verified station identity and coordinate layer; CHG corrected
+master/section_master.csv,52,AVAILABLE_AND_VALIDATED,"Verified endpoint graph; length is station-coordinate geodesic, not track geometry"
+master/train_master.csv,103,AVAILABLE_AND_VALIDATED,Train type gap filled only where existing name supplied explicit Exp token
+schedule/train_schedule.csv,4287,AVAILABLE_AND_VALIDATED,Chronology normalized; empty extraction artifact rows removed
+movement/train_movement.csv,3937,AVAILABLE_AND_VALIDATED,Direction/time normalization; occupancy duration derived
+gis/station_points.geojson,53,DERIVED_FROM_VERIFIED_COORDINATES,Geographic station points
+gis/section_schematic.geojson,52,DERIVED_SCHEMATIC_ONLY,Straight station-to-station lines; not authoritative track geometry
+master/asset_master.csv,0,NO_VERIFIED_SOURCE_ROWS,Schema only; intentionally empty
+master/operational_restrictions.csv,0,NO_VERIFIED_SOURCE_ROWS,Schema only; intentionally empty
+operational/block_master.csv,0,NO_VERIFIED_SOURCE_ROWS,Schema only; runtime source not provided
+operational/incidents.csv,0,NO_VERIFIED_SOURCE_ROWS,Schema only; runtime source not provided
+realtime/train_positions.csv,0,NO_VERIFIED_TELEMETRY_SOURCE,Schema only; do not simulate live GPS
+historical/actual_delays.csv,0,NO_VERIFIED_HISTORICAL_SOURCE,Schema only
+historical/maintenance_outcomes.csv,0,NO_VERIFIED_HISTORICAL_SOURCE,Schema only

@@ -92,7 +92,7 @@ def create_mock_window(
 
 
 class MockRequest:
-    def __init__(self, rid, f="KE", t="ATG", dur=60, s=None, e=None, p="MEDIUM"):
+    def __init__(self, rid, f="AKRD", t="CCH", dur=60, s=None, e=None, p="MEDIUM"):
         self.request_id = rid
         self.from_station = f
         self.to_station = t
@@ -118,8 +118,8 @@ def test_02_default_recommendation_unchanged(real_repo):
     """Best candidate window selected under default config matches Phase 2 pure delay selection."""
     opt_res = run_optimization(
         repo=real_repo,
-        from_station="KE",
-        to_station="ATG",
+        from_station="AKRD",
+        to_station="CCH",
         earliest_start=datetime(1900, 1, 1, 6, 0),
         latest_end=datetime(1900, 1, 1, 18, 0),
         duration_minutes=120,
@@ -374,16 +374,16 @@ def test_21_same_input_same_recommendation(real_repo):
     """Optimizer run twice with same request yields identical window ordering & breakdown."""
     w1 = run_optimization(
         repo=real_repo,
-        from_station="KE",
-        to_station="ATG",
+        from_station="AKRD",
+        to_station="CCH",
         earliest_start=datetime(1900, 1, 1, 6, 0),
         latest_end=datetime(1900, 1, 1, 18, 0),
         duration_minutes=120,
     )
     w2 = run_optimization(
         repo=real_repo,
-        from_station="KE",
-        to_station="ATG",
+        from_station="AKRD",
+        to_station="CCH",
         earliest_start=datetime(1900, 1, 1, 6, 0),
         latest_end=datetime(1900, 1, 1, 18, 0),
         duration_minutes=120,
@@ -405,8 +405,8 @@ def test_22_response_contains_score_breakdown(test_client):
     """API /api/v1/brain/analyze response includes score_breakdown on recommendation and response."""
     payload = {
         "request_id": "REQ-P3-API",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T14:00:00",
@@ -427,8 +427,8 @@ def test_23_response_contains_scoring_version(test_client):
     """API /api/v1/brain/analyze metadata contains scoring_version == 'PHASE_3_V1'."""
     payload = {
         "request_id": "REQ-P3-VER",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T14:00:00",
@@ -444,8 +444,8 @@ def test_24_existing_impact_score_field_preserved(test_client):
     """Existing impact_score field is preserved as numeric and matches total delay under default config."""
     payload = {
         "request_id": "REQ-P3-PRESERVE",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T14:00:00",
@@ -468,8 +468,8 @@ def test_25_optimizer_uses_centralized_score(real_repo):
     """Optimizer simulate_window calls compute_impact_score and sets window attributes."""
     opt_res = run_optimization(
         repo=real_repo,
-        from_station="KE",
-        to_station="ATG",
+        from_station="AKRD",
+        to_station="CCH",
         earliest_start=datetime(1900, 1, 1, 6, 0),
         latest_end=datetime(1900, 1, 1, 18, 0),
         duration_minutes=120,
@@ -481,8 +481,8 @@ def test_25_optimizer_uses_centralized_score(real_repo):
     sim_res = simulate_window(
         window=test_window,
         repo=real_repo,
-        from_station="KE",
-        to_station="ATG",
+        from_station="AKRD",
+        to_station="CCH",
         request_priority="HIGH",
     )
     assert sim_res.window.feasible is True
@@ -511,8 +511,8 @@ def test_27_bundle_uses_phase3_score(test_client):
     """Bundling evaluation via analyze API produces bundles and preserves score_breakdown."""
     body = {
         "request_id": "REQ-BND-P3-1",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T11:00:00",
         "latest_end": "1900-01-01T15:00:00",
@@ -520,8 +520,8 @@ def test_27_bundle_uses_phase3_score(test_client):
             "pending_requests": [
                 {
                     "request_id": "REQ-BND-P3-2",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "duration_minutes": 60,
                     "earliest_start": "1900-01-01T11:00:00",
                     "latest_end": "1900-01-01T15:00:00",
@@ -541,8 +541,8 @@ def test_28_bundle_label_has_single_phase_label(test_client):
     """Bundle reason contains ONLY single [PHASE 2 BUNDLE ESTIMATE] label."""
     body = {
         "request_id": "REQ-BND-LBL1",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T11:00:00",
         "latest_end": "1900-01-01T15:00:00",
@@ -550,8 +550,8 @@ def test_28_bundle_label_has_single_phase_label(test_client):
             "pending_requests": [
                 {
                     "request_id": "REQ-BND-LBL2",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "duration_minutes": 60,
                     "earliest_start": "1900-01-01T11:00:00",
                     "latest_end": "1900-01-01T15:00:00",

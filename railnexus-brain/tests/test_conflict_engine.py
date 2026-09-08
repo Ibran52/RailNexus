@@ -180,10 +180,10 @@ def test_cascade_delay_sentinel():
 
 # ── Real dataset integration ──────────────────────────────────────────────────
 
-def test_real_section_ke_atg_has_trains(real_repo):
-    """Section KE→ATG must have at least one train movement in the dataset."""
-    trains = real_repo.get_trains_by_section("KE", "ATG")
-    assert len(trains) > 0, "Expected train movements on KE→ATG from CSV."
+def test_real_section_akrd_cch_has_trains(real_repo):
+    """Section AKRD→CCH must have at least one train movement in the dataset."""
+    trains = real_repo.get_trains_by_section("AKRD", "CCH")
+    assert len(trains) > 0, "Expected train movements on AKRD→CCH from CSV."
 
 
 def test_real_section_nonexistent_returns_empty(real_repo):

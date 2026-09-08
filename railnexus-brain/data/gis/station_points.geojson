@@ -1,0 +1,800 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "CSMT",
+        "station_name": "MUMBAI CST",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.836903,
+          18.944481
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "MSD",
+        "station_name": "BOMBAY MASJID",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.838561,
+          18.952385
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "SNRD",
+        "station_name": "MUMBAI SANDHURST ROAD",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.839733,
+          18.962311
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "BY",
+        "station_name": "BYCULLA",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.833211,
+          18.97695
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "CHG",
+        "station_name": "CHINCHPOKLI",
+        "source": "Indian Railways station list (code/name); Wikidata coordinate reference to datameet stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.83266111111111,
+          18.98678888888889
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "CRD",
+        "station_name": "MUMBAI CURREY ROAD",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.83265999999999,
+          18.9937
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "PR",
+        "station_name": "MUMBAI PAREL",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.83750400000001,
+          19.009045
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "DR",
+        "station_name": "MUMBAI DADAR CENTRAL",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.842972,
+          19.017179
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "MTN",
+        "station_name": "MUMBAI MATUNGA",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.84984200000001,
+          19.027347
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "SIN",
+        "station_name": "MUMBAI SION",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.864262,
+          19.047725
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "CLA",
+        "station_name": "KURLA JN",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.879375,
+          19.065221
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "VVH",
+        "station_name": "VIDYAVIHAR",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.897181,
+          19.079258
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "GC",
+        "station_name": "GHATKOPAR",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.908591,
+          19.085985
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "VK",
+        "station_name": "VIKHROLI",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.928312,
+          19.11196
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "BND",
+        "station_name": "BHANDUP",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.93723505,
+          19.14200998
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "NHU",
+        "station_name": "NAHUR",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.946683,
+          19.154646
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "MLND",
+        "station_name": "MULUND",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.956933,
+          19.172355
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "TNA",
+        "station_name": "THANE",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.97541700000001,
+          19.185757
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "KLVA",
+        "station_name": "KALVA",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.997651,
+          19.196049
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "MBQ",
+        "station_name": "MUMBRA",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.02326,
+          19.190223
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "DIVA",
+        "station_name": "DIVA",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.041905,
+          19.188394
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "KOPR",
+        "station_name": "KOPAR ROAD",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.077841,
+          19.211345
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "DI",
+        "station_name": "DOMBIVILI",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.0869,
+          19.218218
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "THK",
+        "station_name": "THAKRULI",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.09767799999999,
+          19.225768
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "KYN",
+        "station_name": "KALYAN JN",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.12974,
+          19.234716
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "VLDI",
+        "station_name": "VITHALWADI",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.149051,
+          19.229234
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "ULNR",
+        "station_name": "ULHASNAGAR",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.163466,
+          19.218215
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "ABH",
+        "station_name": "AMBARNATH",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.184756,
+          19.210382000000003
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "BUD",
+        "station_name": "BADLAPUR",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.2390496,
+          19.1663883
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "VGI",
+        "station_name": "VANGANI",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.300967,
+          19.094299
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "SHLU",
+        "station_name": "SHELU",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.317386,
+          19.062985
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "NRL",
+        "station_name": "NERAL",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.318955,
+          19.027113
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "BVS",
+        "station_name": "BHIVPURI ROAD",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.331324,
+          18.970655
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "KJT",
+        "station_name": "KARJAT",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.320691,
+          18.911158
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "PDI",
+        "station_name": "PALASDARI",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.32055,
+          18.88409
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "KAD",
+        "station_name": "KHANDALA",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.377469,
+          18.755087
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "LNL",
+        "station_name": "LONAVALA",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.407657,
+          18.748883
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "MVL",
+        "station_name": "MALAVLI",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.48064000000001,
+          18.743833
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "KMST",
+        "station_name": "KAMSHET",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.552352,
+          18.766938
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "KNHE",
+        "station_name": "KANHE",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.59401600000001,
+          18.762352
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "VDN",
+        "station_name": "VADGAON",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.636925,
+          18.742927
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "TGN",
+        "station_name": "TALEGAON",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.67201399999999,
+          18.734829
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "GRWD",
+        "station_name": "GHORAWADI",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.69698199999999,
+          18.720585
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "BGWI",
+        "station_name": "BEGDAEWADI",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.708437,
+          18.700263
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "DEHR",
+        "station_name": "DEHU ROAD",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.734169,
+          18.680176
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "AKRD",
+        "station_name": "AKURDI",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.76424399999999,
+          18.64812
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "CCH",
+        "station_name": "CHINCHVAD",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.79139199999999,
+          18.638903
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "PMP",
+        "station_name": "PIMPRI",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.801991,
+          18.622977
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "KSWD",
+        "station_name": "KASAR WADI",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8207010529,
+          18.607555174
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "DAPD",
+        "station_name": "DAPODI",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.83279900000001,
+          18.58005
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "KK",
+        "station_name": "KHADKI",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.840513,
+          18.56301
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "SVJR",
+        "station_name": "SHIVAJINAGAR",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.851147,
+          18.531738
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_code": "PUNE",
+        "station_name": "PUNE JN",
+        "source": "stations.json"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.873086,
+          18.529378
+        ]
+      }
+    }
+  ]
+}

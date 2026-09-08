@@ -124,14 +124,14 @@ export const ConfigurationPage: React.FC = () => {
                 SOURCE DOCUMENT
               </span>
               <h4 className="text-xs font-bold text-slate-800 mt-1">
-                WORKING TIME TABLE 2025
+                Finalized timetable package
               </h4>
               <p className="text-[11px] text-slate-500 mt-0.5">
-                Indian Railways Main Line Section Occupancy Dataset
+                Active RailNexus finalized data source
               </p>
-              <div className="mt-3 flex items-center gap-1.5 text-[10px] font-mono text-emerald-700 font-bold">
+                <div className="mt-3 flex items-center gap-1.5 text-[10px] font-mono text-emerald-700 font-bold">
                 <CheckCircle2 className="h-3.5 w-3.5" />
-                <span>CRC-32 CHECKSUM MATCH</span>
+                <span>DATASET STATUS: {dataStatus?.status || 'CHECKING'}</span>
               </div>
             </div>
 
@@ -173,7 +173,7 @@ export const ConfigurationPage: React.FC = () => {
                 Deterministic conflict & cascade decision graph
               </p>
               <div className="mt-3 text-[10px] font-mono text-emerald-400">
-                ACTIVE CLOCK: UTC / IST NORMALIZED
+                DATASET VERSION: {dataStatus?.dataset || 'MISSING DATA'}
               </div>
             </div>
           </div>
@@ -246,7 +246,7 @@ export const ConfigurationPage: React.FC = () => {
           subtitle="Corridor topology + train movements + time index = normalized operational corridor"
           stations={
             stations.length > 0
-              ? stations.slice(0, 8).map((s) => ({
+              ? stations.map((s) => ({
                   name: s,
                   code: s,
                 }))

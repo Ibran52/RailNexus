@@ -41,4 +41,4 @@ def test_data_status_fields(test_client):
 
 def test_data_status_dataset_name(test_client):
     data = test_client.get("/api/v1/brain/data-status").json()
-    assert "block_ready_mumbai_pune.csv" in data["dataset"]
+    assert "train_movement.csv" in data["dataset"]

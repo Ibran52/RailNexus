@@ -77,6 +77,10 @@ describe('What-If Simulator Verification', () => {
       expect(screen.getByText(/REQ-WIF-001/)).toBeInTheDocument();
     });
 
+    const inputs = screen.getAllByRole('textbox');
+    await userEvent.type(inputs[0], '1900-01-01T11:30:00');
+    await userEvent.type(inputs[1], '1900-01-01T14:00:00');
+
     const runBtn = screen.getByRole('button', { name: /Run Simulation/i });
     await userEvent.click(runBtn);
 

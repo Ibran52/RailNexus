@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import logging
 import uuid
+import json
 
 import pandas as pd
 from fastapi import APIRouter, Depends, HTTPException, Request, status
@@ -27,7 +28,7 @@ from api.schemas import (
     ErrorResponse,
     HealthResponse,
 )
-from config import CSV_FILENAME, SERVICE_NAME, SERVICE_VERSION
+from config import CSV_FILENAME, SERVICE_NAME, SERVICE_VERSION, STATION_POINTS_PATH, SECTION_SCHEMATIC_PATH
 from core.validator import validate
 
 logger = logging.getLogger(__name__)
@@ -112,6 +113,43 @@ async def data_status(
 )
 async def list_stations(repo=Depends(_get_repo)) -> list[str]:
     return repo.get_unique_stations()
+
+
+@router.get(
+    "/stations/details",
+    summary="List verified station coordinates",
+    description="Returns station names and coordinates from the finalized GIS station points.",
+    tags=["Data"],
+)
+async def list_station_details() -> list[dict]:
+    data = json.loads(STATION_POINTS_PATH.read_text(encoding="utf-8"))
+    result = []
+    for feature in data.get("features", []):
+        properties = feature.get("properties", {})
+        coordinates = feature.get("geometry", {}).get("coordinates", [])
+        if len(coordinates) != 2:
+            continue
+        longitude, latitude = coordinates
+        if not (-90 <= latitude <= 90 and -180 <= longitude <= 180):
+            continue
+        result.append({
+            "station_code": properties.get("station_code"),
+            "station_name": properties.get("station_name"),
+            "latitude": latitude,
+            "longitude": longitude,
+            "source": properties.get("source"),
+        })
+    return result
+
+
+@router.get(
+    "/section-geometry",
+    summary="Return verified schematic section geometry",
+    description="Returns finalized station-to-station schematic geometry, not authoritative track geometry.",
+    tags=["Data"],
+)
+async def section_geometry() -> dict:
+    return json.loads(SECTION_SCHEMATIC_PATH.read_text(encoding="utf-8"))
 
 
 # ── GET /sections ─────────────────────────────────────────────────────────────

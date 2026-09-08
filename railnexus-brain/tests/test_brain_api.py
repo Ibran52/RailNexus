@@ -18,8 +18,8 @@ def _valid_body(**overrides) -> dict:
     """Base valid body — KE→ATG, 2 hours, 10:00–20:00 (1900-01-01 date base)."""
     body = {
         "request_id": "REQ-TEST-001",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T20:00:00",
@@ -141,7 +141,7 @@ def test_analyze_duration_zero_rejected(test_client):
 def test_analyze_same_stations_rejected(test_client):
     r = test_client.post(
         "/api/v1/brain/analyze",
-        json=_valid_body(from_station="KE", to_station="KE"),
+        json=_valid_body(from_station="AKRD", to_station="AKRD"),
     )
     assert r.status_code == 422
 

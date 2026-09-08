@@ -563,8 +563,8 @@ def test_19_no_double_counting_direct_delay():
 def test_20_response_includes_cascade_metrics(test_client):
     body = {
         "request_id": "REQ-CASCADE-1",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T20:00:00",
@@ -584,8 +584,8 @@ def test_20_response_includes_cascade_metrics(test_client):
 def test_21_response_includes_delay_trace(test_client):
     body = {
         "request_id": "REQ-CASCADE-2",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T20:00:00",
@@ -600,8 +600,8 @@ def test_21_response_includes_delay_trace(test_client):
 def test_22_successful_response_reports_phase_2_deterministic(test_client):
     body = {
         "request_id": "REQ-CASCADE-3",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T06:00:00",
         "latest_end": "1900-01-01T08:00:00",
@@ -640,8 +640,8 @@ def test_23_partial_propagation_reports_partial():
 def test_24_legacy_response_structure_compatible(test_client):
     body = {
         "request_id": "REQ-LEGACY",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T20:00:00",
@@ -679,8 +679,8 @@ def test_25_joint_planner_uses_total_delay():
 def test_26_joint_planner_same_section_mutual_exclusion(test_client):
     body = {
         "request_id": "REQ-S1",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T11:00:00",
         "latest_end": "1900-01-01T15:00:00",
@@ -688,8 +688,8 @@ def test_26_joint_planner_same_section_mutual_exclusion(test_client):
             "pending_requests": [
                 {
                     "request_id": "REQ-S2",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "duration_minutes": 60,
                     "earliest_start": "1900-01-01T11:00:00",
                     "latest_end": "1900-01-01T15:00:00",
@@ -712,8 +712,8 @@ def test_26_joint_planner_same_section_mutual_exclusion(test_client):
 def test_27_joint_planner_different_sections_independent(test_client):
     body = {
         "request_id": "REQ-D1",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T11:00:00",
         "latest_end": "1900-01-01T15:00:00",
@@ -740,8 +740,8 @@ def test_27_joint_planner_different_sections_independent(test_client):
 def test_28_fixed_plans_remain_protected(test_client):
     body = {
         "request_id": "REQ-FP-TEST",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T14:00:00",
@@ -750,8 +750,8 @@ def test_28_fixed_plans_remain_protected(test_client):
             "fixed_plans": [
                 {
                     "request_id": "FIXED-LOCKED",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "allocated_start": "1900-01-01T10:00:00",
                     "allocated_end": "1900-01-01T12:00:00",
                     "status": "APPROVED",
@@ -771,8 +771,8 @@ def test_28_fixed_plans_remain_protected(test_client):
 def test_29_bundling_uses_total_delay_metrics(test_client):
     body = {
         "request_id": "REQ-BND-1",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T11:00:00",
         "latest_end": "1900-01-01T15:00:00",
@@ -780,8 +780,8 @@ def test_29_bundling_uses_total_delay_metrics(test_client):
             "pending_requests": [
                 {
                     "request_id": "REQ-BND-2",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "duration_minutes": 60,
                     "earliest_start": "1900-01-01T11:00:00",
                     "latest_end": "1900-01-01T15:00:00",
@@ -802,8 +802,8 @@ def test_29_bundling_uses_total_delay_metrics(test_client):
 def test_30_bundling_labeled_phase_2_bundle_estimate(test_client):
     body = {
         "request_id": "REQ-BND-LABEL1",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T11:00:00",
         "latest_end": "1900-01-01T15:00:00",
@@ -811,8 +811,8 @@ def test_30_bundling_labeled_phase_2_bundle_estimate(test_client):
             "pending_requests": [
                 {
                     "request_id": "REQ-BND-LABEL2",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "duration_minutes": 60,
                     "earliest_start": "1900-01-01T11:00:00",
                     "latest_end": "1900-01-01T15:00:00",

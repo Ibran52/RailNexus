@@ -131,15 +131,15 @@ def test_6_candidate_with_occupied_section_is_infeasible():
     df = make_df([{
         "train_number": 201,
         "train_type": "Exp",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "from_dt": dt(11, 30),
         "to_dt": dt(12, 30),  # occupies section across 12:00
         "occupancy_duration_mins": 60.0,
     }])
     repo = TrainRepository(df)
     win = CandidateWindow(start=dt(12, 0), end=dt(14, 0))
-    res = simulate_window(win, repo, "KE", "ATG")
+    res = simulate_window(win, repo, "AKRD", "CCH")
     assert res.window.feasible is False
     assert res.window.already_occupied_count == 1
     assert len(res.window.infeasibility_reasons) == 1
@@ -152,15 +152,15 @@ def test_7_candidate_with_entry_during_block_is_feasible():
     df = make_df([{
         "train_number": 202,
         "train_type": "Exp",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "from_dt": dt(12, 30),
         "to_dt": dt(13, 0),
         "occupancy_duration_mins": 30.0,
     }])
     repo = TrainRepository(df)
     win = CandidateWindow(start=dt(12, 0), end=dt(14, 0))
-    res = simulate_window(win, repo, "KE", "ATG")
+    res = simulate_window(win, repo, "AKRD", "CCH")
     assert res.window.feasible is True
     assert res.window.already_occupied_count == 0
     assert res.window.entry_block_count == 1
@@ -172,8 +172,8 @@ def test_7_candidate_with_entry_during_block_is_feasible():
 def test_8_all_candidates_infeasible_returns_no_feasible_window(test_client):
     body = {
         "request_id": "REQ-ALL-BLOCKED",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T12:00:00",
@@ -182,8 +182,8 @@ def test_8_all_candidates_infeasible_returns_no_feasible_window(test_client):
             "fixed_plans": [
                 {
                     "request_id": "FIXED-BLOCKING",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "allocated_start": "1900-01-01T10:00:00",
                     "allocated_end": "1900-01-01T12:00:00",
                     "status": "APPROVED",
@@ -204,8 +204,8 @@ def test_8_all_candidates_infeasible_returns_no_feasible_window(test_client):
 def test_9_two_same_section_requests_no_overlap(test_client):
     body = {
         "request_id": "REQ-M1",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T18:00:00",
@@ -213,8 +213,8 @@ def test_9_two_same_section_requests_no_overlap(test_client):
             "pending_requests": [
                 {
                     "request_id": "REQ-M2",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "duration_minutes": 120,
                     "earliest_start": "1900-01-01T10:00:00",
                     "latest_end": "1900-01-01T18:00:00",
@@ -237,8 +237,8 @@ def test_9_two_same_section_requests_no_overlap(test_client):
 def test_10_two_different_section_requests_can_overlap(test_client):
     body = {
         "request_id": "REQ-DIFF-1",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": "1900-01-01T15:00:00",
         "latest_end": "1900-01-01T17:00:00",
@@ -269,8 +269,8 @@ def test_10_two_different_section_requests_can_overlap(test_client):
 def test_11_fixed_plan_blocks_overlapping_candidate(test_client):
     body = {
         "request_id": "REQ-FP-BLOCK",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": "1900-01-01T11:00:00",
         "latest_end": "1900-01-01T15:00:00",
@@ -279,8 +279,8 @@ def test_11_fixed_plan_blocks_overlapping_candidate(test_client):
             "fixed_plans": [
                 {
                     "request_id": "APPROVED-FP",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "allocated_start": "1900-01-01T11:00:00",
                     "allocated_end": "1900-01-01T13:00:00",
                     "status": "APPROVED",
@@ -305,8 +305,8 @@ def test_11_fixed_plan_blocks_overlapping_candidate(test_client):
 def test_12_fixed_plan_does_not_block_unrelated_section(test_client):
     body = {
         "request_id": "REQ-UNRELATED-SEC",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 120,
         "earliest_start": "1900-01-01T11:00:00",
         "latest_end": "1900-01-01T13:00:00",
@@ -336,8 +336,8 @@ def test_12_fixed_plan_does_not_block_unrelated_section(test_client):
 def test_13_replanned_with_unapproved_recommendation(test_client):
     body = {
         "request_id": "REQ-NEW-ARRIVED",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T15:00:00",
         "latest_end": "1900-01-01T17:00:00",
@@ -346,8 +346,8 @@ def test_13_replanned_with_unapproved_recommendation(test_client):
             "pending_requests": [
                 {
                     "request_id": "REQ-PRIOR-REC",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "duration_minutes": 60,
                     "earliest_start": "1900-01-01T15:00:00",
                     "latest_end": "1900-01-01T17:00:00",
@@ -371,8 +371,8 @@ def test_14_approved_plan_remains_fixed(test_client):
     fixed_end = "1900-01-01T13:00:00"
     body = {
         "request_id": "REQ-CHECK-FP",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T10:00:00",
         "latest_end": "1900-01-01T18:00:00",
@@ -381,8 +381,8 @@ def test_14_approved_plan_remains_fixed(test_client):
             "fixed_plans": [
                 {
                     "request_id": "LOCKED-PLAN",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "allocated_start": fixed_start,
                     "allocated_end": fixed_end,
                     "status": "APPROVED",
@@ -409,8 +409,8 @@ def test_14_approved_plan_remains_fixed(test_client):
 def test_15_bundle_candidate_generated(test_client):
     body = {
         "request_id": "REQ-BC-1",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T15:00:00",
         "latest_end": "1900-01-01T18:00:00",
@@ -418,8 +418,8 @@ def test_15_bundle_candidate_generated(test_client):
             "pending_requests": [
                 {
                     "request_id": "REQ-BC-2",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "duration_minutes": 60,
                     "earliest_start": "1900-01-01T15:00:00",
                     "latest_end": "1900-01-01T18:00:00",
@@ -441,8 +441,8 @@ def test_15_bundle_candidate_generated(test_client):
 def test_16_different_sections_no_bundle(test_client):
     body = {
         "request_id": "REQ-NOBUNDLE-1",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T15:00:00",
         "latest_end": "1900-01-01T18:00:00",
@@ -526,8 +526,8 @@ def test_17_bundle_with_worse_impact_separate():
 def test_18_backend_supplied_version_echoed(test_client):
     body = {
         "request_id": "REQ-V42",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T15:00:00",
         "latest_end": "1900-01-01T17:00:00",
@@ -550,8 +550,8 @@ def test_18_backend_supplied_version_echoed(test_client):
 def test_19_missing_version_deterministic_fallback(test_client):
     body = {
         "request_id": "REQ-NO-V",
-        "from_station": "KE",
-        "to_station": "ATG",
+        "from_station": "AKRD",
+        "to_station": "CCH",
         "duration_minutes": 60,
         "earliest_start": "1900-01-01T15:00:00",
         "latest_end": "1900-01-01T17:00:00",
@@ -560,8 +560,8 @@ def test_19_missing_version_deterministic_fallback(test_client):
             "pending_requests": [
                 {
                     "request_id": "PEND-1",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "duration_minutes": 60,
                     "earliest_start": "1900-01-01T15:00:00",
                     "latest_end": "1900-01-01T17:00:00",
@@ -570,8 +570,8 @@ def test_19_missing_version_deterministic_fallback(test_client):
             "fixed_plans": [
                 {
                     "request_id": "FIXED-1",
-                    "from_station": "KE",
-                    "to_station": "ATG",
+                    "from_station": "AKRD",
+                    "to_station": "CCH",
                     "allocated_start": "1900-01-01T10:00:00",
                     "allocated_end": "1900-01-01T12:00:00",
                     "status": "APPROVED",

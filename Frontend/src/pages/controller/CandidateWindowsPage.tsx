@@ -57,10 +57,10 @@ export const CandidateWindowsPage: React.FC = () => {
         if (primaryRec && primaryRec.start && primaryRec.end) {
           rawOptions.push({
             ...primaryRec,
-            conflict_count: primaryRec.conflict_count ?? activeRun?.metrics?.conflict_count ?? activeRun?.conflicts?.length ?? 0,
-            direct_delay_minutes: primaryRec.direct_delay_minutes ?? activeRun?.metrics?.direct_delay_minutes ?? 0,
-            total_delay_minutes: primaryRec.total_delay_minutes ?? activeRun?.metrics?.total_delay_minutes ?? activeRun?.metrics?.direct_delay_minutes ?? 0,
-            affected_train_count: primaryRec.affected_train_count ?? activeRun?.metrics?.affected_train_count ?? 0,
+            conflict_count: primaryRec.conflict_count ?? activeRun?.metrics?.conflict_count ?? activeRun?.conflicts?.length,
+            direct_delay_minutes: primaryRec.direct_delay_minutes ?? activeRun?.metrics?.direct_delay_minutes,
+            total_delay_minutes: primaryRec.total_delay_minutes ?? activeRun?.metrics?.total_delay_minutes ?? activeRun?.metrics?.direct_delay_minutes,
+            affected_train_count: primaryRec.affected_train_count ?? activeRun?.metrics?.affected_train_count,
             affected_trains: primaryRec.affected_trains ?? activeRun?.affected_trains ?? [],
             conflicts: primaryRec.conflicts ?? activeRun?.conflicts ?? [],
             is_recommended: true,
@@ -72,10 +72,10 @@ export const CandidateWindowsPage: React.FC = () => {
             if (alt && alt.start && alt.end) {
               rawOptions.push({
                 ...alt,
-                conflict_count: alt.conflict_count ?? alt.conflicts?.length ?? 0,
-                direct_delay_minutes: alt.direct_delay_minutes ?? alt.total_delay_minutes ?? 0,
-                total_delay_minutes: alt.total_delay_minutes ?? alt.direct_delay_minutes ?? 0,
-                affected_train_count: alt.affected_train_count ?? alt.affected_trains?.length ?? 0,
+                conflict_count: alt.conflict_count ?? alt.conflicts?.length,
+                direct_delay_minutes: alt.direct_delay_minutes ?? alt.total_delay_minutes,
+                total_delay_minutes: alt.total_delay_minutes ?? alt.direct_delay_minutes,
+                affected_train_count: alt.affected_train_count ?? alt.affected_trains?.length,
                 is_recommended: false,
               });
             }
@@ -175,22 +175,22 @@ export const CandidateWindowsPage: React.FC = () => {
             const delayMinutes =
               cand.direct_delay_minutes !== undefined
                 ? cand.direct_delay_minutes
-                : cand.total_delay_minutes ?? 0;
+                : cand.total_delay_minutes ?? 'MISSING DATA';
 
             const affectedTrains =
               cand.affected_train_count !== undefined
                 ? cand.affected_train_count
-                : cand.affected_trains?.length ?? 0;
+                : cand.affected_trains?.length ?? 'MISSING DATA';
 
             const conflictsCount =
               cand.conflict_count !== undefined
                 ? cand.conflict_count
-                : cand.conflicts?.length ?? 0;
+                : cand.conflicts?.length ?? 'MISSING DATA';
 
             const priorityTrains =
               cand.priority_trains_affected !== undefined
                 ? (cand.priority_trains_affected === 0 ? 'None' : cand.priority_trains_affected)
-                : 'None';
+                : 'MISSING DATA';
 
             return (
               <div
@@ -233,7 +233,7 @@ export const CandidateWindowsPage: React.FC = () => {
                     <div className="space-y-2.5 text-xs">
                       <div className="flex items-center justify-between py-1 border-b border-slate-50">
                         <span className="text-slate-500">Maintenance completion</span>
-                        <span className="font-semibold text-slate-800">Feasible</span>
+                        <span className="font-semibold text-slate-800">{cand.feasibility || 'NOT IMPLEMENTED'}</span>
                       </div>
 
                       <div className="flex items-center justify-between py-1 border-b border-slate-50">
@@ -271,14 +271,16 @@ export const CandidateWindowsPage: React.FC = () => {
                       <div className="flex items-center justify-between py-1 border-b border-slate-50">
                         <span className="text-slate-500">Temporary Speed Restriction</span>
                         <span className="font-medium text-slate-700">
-                          {cand.speed_restriction_required ? 'Required' : 'Not required'}
+                          {cand.speed_restriction_required === undefined
+                            ? 'NOT IMPLEMENTED'
+                            : cand.speed_restriction_required ? 'Required' : 'Not required'}
                         </span>
                       </div>
 
                       <div className="flex items-center justify-between py-1 border-b border-slate-50">
                         <span className="text-slate-500">Combined activities</span>
                         <span className="font-medium text-slate-800">
-                          {request?.department || 'Coordinated'}
+                          NOT IMPLEMENTED
                         </span>
                       </div>
 
@@ -291,7 +293,7 @@ export const CandidateWindowsPage: React.FC = () => {
                         >
                           {cand.impact_score !== undefined
                             ? `Score: ${cand.impact_score}`
-                            : isRec ? 'Lower' : 'Elevated'}
+                            : 'MISSING DATA'}
                         </span>
                       </div>
                     </div>
