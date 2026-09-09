@@ -14,6 +14,7 @@ export const WhatIfSimulatorPage: React.FC = () => {
   const [simulationResult, setSimulationResult] = useState<any | null>(null);
   const [isSimulating, setIsSimulating] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [simulationStatus, setSimulationStatus] = useState<'idle' | 'running' | 'success' | 'failed'>('idle');
 
   useEffect(() => {
     async function loadRequests() {
@@ -33,19 +34,31 @@ export const WhatIfSimulatorPage: React.FC = () => {
   const handleSimulate = async () => {
     if (!selectedRequestId || !proposedStart || !proposedEnd) {
       setError('Select a request and provide both scenario timestamps.');
+      setSimulationStatus('failed');
+      setSimulationResult(null);
       return;
     }
+
+    setIsSimulating(true);
+    setSimulationStatus('running');
+    setError(null);
+    setSimulationResult(null);
+
     try {
-      setIsSimulating(true);
-      setError(null);
       const res = await controllerApi.runWhatIf(
         selectedRequestId,
         proposedStart,
         proposedEnd
       );
-      setSimulationResult(res.simulationResult || res);
+      const nextResult = res.simulationResult || res;
+      setSimulationResult(nextResult);
+      setSimulationStatus('success');
+      setError(null);
     } catch (err: any) {
-      setError(err.response?.data?.error?.message || err.message || 'Simulation execution failed');
+      const message = err.response?.data?.error?.message || err.message || 'Simulation execution failed';
+      setError(message);
+      setSimulationResult(null);
+      setSimulationStatus('failed');
     } finally {
       setIsSimulating(false);
     }
@@ -215,6 +228,7 @@ export const WhatIfSimulatorPage: React.FC = () => {
                 onClick={() => {
                   setSimulationResult(null);
                   setError(null);
+                  setSimulationStatus('idle');
                 }}
                 className="p-2.5 rounded border border-slate-200 text-slate-500 hover:bg-slate-50"
                 title="Reset Workbench"
@@ -254,7 +268,17 @@ export const WhatIfSimulatorPage: React.FC = () => {
             />
 
             {/* Simulation Results Card */}
-            {simulationResult ? (
+            {simulationStatus === 'failed' && error ? (
+              <div className="bg-rose-50 border border-rose-200 rounded-lg p-5 shadow-subtle space-y-3">
+                <div className="flex items-center space-x-2">
+                  <AlertTriangle className="h-5 w-5 text-rose-600" />
+                  <h3 className="text-sm font-bold text-rose-900 font-sans">
+                    Simulation Failed / Invalid Request
+                  </h3>
+                </div>
+                <p className="text-sm font-mono text-rose-700">{error}</p>
+              </div>
+            ) : simulationResult ? (
               <div className="bg-white border border-slate-200 rounded-lg p-5 shadow-subtle space-y-4">
                 <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                   <div className="flex items-center space-x-2">

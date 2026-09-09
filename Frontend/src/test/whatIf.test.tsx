@@ -34,11 +34,11 @@ vi.mock('../components/RailwayTrack', () => ({
 describe('What-If Simulator Verification', () => {
   const dummyRequests = [
     {
-      _id: 'mongo-id-wif',
+      _id: 'mongo-id-wif-1',
       requestId: 'REQ-WIF-001',
       maintenanceType: 'Track Tamping',
-      fromStation: 'STA',
-      toStation: 'STB',
+      fromStation: 'DIVA',
+      toStation: 'KOPR',
       durationMinutes: 90,
       earliestStart: '2026-09-01T10:00:00Z',
       latestEnd: '2026-09-01T13:00:00Z',
@@ -49,6 +49,23 @@ describe('What-If Simulator Verification', () => {
       planningVersion: 1,
       createdAt: '2026-09-01T09:00:00Z',
       updatedAt: '2026-09-01T09:00:00Z',
+    },
+    {
+      _id: 'mongo-id-wif-2',
+      requestId: 'REQ-WIF-002',
+      maintenanceType: 'Track Renewal',
+      fromStation: 'BUD',
+      toStation: 'ABH',
+      durationMinutes: 120,
+      earliestStart: '2026-09-01T10:00:00Z',
+      latestEnd: '2026-09-01T15:00:00Z',
+      priority: RequestPriority.CRITICAL,
+      status: RequestStatus.PENDING,
+      department: Department.SNT,
+      createdBy: 'officer-2',
+      planningVersion: 1,
+      createdAt: '2026-09-01T09:10:00Z',
+      updatedAt: '2026-09-01T09:10:00Z',
     },
   ] as MaintenanceRequest[];
 
@@ -94,11 +111,9 @@ describe('What-If Simulator Verification', () => {
     await userEvent.click(runBtn);
 
     await waitFor(() => {
-      // Must contain explicit non-operational simulation badge
       expect(screen.getAllByText('WHAT-IF / SIMULATION ONLY').length).toBeGreaterThanOrEqual(1);
     });
 
-    // Verification of non-operational advisory
     expect(
       screen.getByText(/This projection is sandbox-evaluated and does NOT commit operational block approvals/i)
     ).toBeInTheDocument();
@@ -107,8 +122,151 @@ describe('What-If Simulator Verification', () => {
     expect(screen.getByText('22')).toBeInTheDocument();
     expect(screen.getByText('0')).toBeInTheDocument();
     expect(screen.getByText('Feasible')).toBeInTheDocument();
-
-    // Verify runWhatIf was called but approveRequest/modifyRequest were NOT
     expect(controllerApi.runWhatIf).toHaveBeenCalledTimes(1);
+  });
+
+  it('replaces the prior successful result when a later simulation fails', async () => {
+    vi.mocked(controllerApi.getAllRequests).mockResolvedValue(dummyRequests);
+    vi.mocked(controllerApi.runWhatIf)
+      .mockResolvedValueOnce({
+        metrics: {
+          total_delay_minutes: 0,
+          direct_delay_minutes: 0,
+          cascade_delay_minutes: 0,
+          conflict_count: 0,
+          affected_train_count: 0,
+        },
+        recommendation: {
+          impact_score: 0,
+          conflict_count: 0,
+          is_feasible: true,
+        },
+        explanation: 'DIVA->KOPR rationale',
+      })
+      .mockRejectedValueOnce({
+        response: { data: { error: { message: 'No feasible window for BUD->ABH.' } } },
+      });
+
+    render(
+      <MemoryRouter>
+        <WhatIfSimulatorPage />
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText(/REQ-WIF-001/)).toBeInTheDocument();
+    });
+
+    const firstInputs = screen.getAllByRole('textbox');
+    await userEvent.type(firstInputs[0], '1900-01-01T11:30:00');
+    await userEvent.type(firstInputs[1], '1900-01-01T14:00:00');
+    await userEvent.click(screen.getByRole('button', { name: /Run Simulation/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText(/DIVA->KOPR rationale/i)).toBeInTheDocument();
+    });
+
+    await userEvent.selectOptions(screen.getByRole('combobox'), 'REQ-WIF-002');
+    const secondInputs = screen.getAllByRole('textbox');
+    await userEvent.clear(secondInputs[0]);
+    await userEvent.clear(secondInputs[1]);
+    await userEvent.type(secondInputs[0], '1900-01-01T10:14:00');
+    await userEvent.type(secondInputs[1], '1900-01-01T15:30:00');
+    await userEvent.click(screen.getByRole('button', { name: /Run Simulation/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText(/Simulation Failed \/ Invalid Request/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/No feasible window for BUD->ABH\./i).length).toBeGreaterThan(0);
+    });
+
+    expect(screen.queryByText(/DIVA->KOPR rationale/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Simulation Complete — Impact Metrics/i)).not.toBeInTheDocument();
+    expect(screen.queryByText('0 min')).not.toBeInTheDocument();
+  });
+
+  it('clears stale failure state when a later simulation succeeds', async () => {
+    vi.mocked(controllerApi.getAllRequests).mockResolvedValue(dummyRequests);
+    vi.mocked(controllerApi.runWhatIf)
+      .mockRejectedValueOnce({
+        response: { data: { error: { message: 'Initial request invalid.' } } },
+      })
+      .mockResolvedValueOnce({
+        metrics: {
+          total_delay_minutes: 12,
+          direct_delay_minutes: 5,
+          cascade_delay_minutes: 7,
+          conflict_count: 1,
+          affected_train_count: 3,
+        },
+        recommendation: {
+          impact_score: 12,
+          conflict_count: 1,
+          is_feasible: true,
+        },
+        explanation: 'Latest request succeeded after previous failure',
+      });
+
+    render(
+      <MemoryRouter>
+        <WhatIfSimulatorPage />
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText(/REQ-WIF-001/)).toBeInTheDocument();
+    });
+
+    const firstInputs = screen.getAllByRole('textbox');
+    await userEvent.type(firstInputs[0], '1900-01-01T11:30:00');
+    await userEvent.type(firstInputs[1], '1900-01-01T14:00:00');
+    await userEvent.click(screen.getByRole('button', { name: /Run Simulation/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText(/Simulation Failed \/ Invalid Request/i)).toBeInTheDocument();
+    });
+
+    await userEvent.selectOptions(screen.getByRole('combobox'), 'REQ-WIF-002');
+    const secondInputs = screen.getAllByRole('textbox');
+    await userEvent.clear(secondInputs[0]);
+    await userEvent.clear(secondInputs[1]);
+    await userEvent.type(secondInputs[0], '1900-01-01T10:14:00');
+    await userEvent.type(secondInputs[1], '1900-01-01T15:30:00');
+    await userEvent.click(screen.getByRole('button', { name: /Run Simulation/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText(/Simulation Complete — Impact Metrics/i)).toBeInTheDocument();
+      expect(screen.getByText(/Latest request succeeded after previous failure/i)).toBeInTheDocument();
+    });
+
+    expect(screen.queryByText(/Initial request invalid\./i)).not.toBeInTheDocument();
+  });
+
+  it('keeps the failed state when repeated requests fail without reusing any previous data', async () => {
+    vi.mocked(controllerApi.getAllRequests).mockResolvedValue(dummyRequests);
+    vi.mocked(controllerApi.runWhatIf).mockRejectedValue({
+      response: { data: { error: { message: 'Repeated failure - no feasible window.' } } },
+    });
+
+    render(
+      <MemoryRouter>
+        <WhatIfSimulatorPage />
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText(/REQ-WIF-001/)).toBeInTheDocument();
+    });
+
+    const inputs = screen.getAllByRole('textbox');
+    await userEvent.type(inputs[0], '1900-01-01T11:30:00');
+    await userEvent.type(inputs[1], '1900-01-01T14:00:00');
+    await userEvent.click(screen.getByRole('button', { name: /Run Simulation/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText(/Simulation Failed \/ Invalid Request/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/Repeated failure - no feasible window\./i).length).toBeGreaterThan(0);
+    });
+
+    expect(screen.queryByText(/Simulation Complete — Impact Metrics/i)).not.toBeInTheDocument();
   });
 });
