@@ -314,8 +314,23 @@ export const RequestDetailsPage: React.FC = () => {
                   Feasibility
                 </span>
                 <span className="text-sm font-bold font-mono text-emerald-700 mt-1.5 block uppercase">
-                  {rec.feasibility ??
-                    (rec.is_feasible === undefined ? 'MISSING DATA' : rec.is_feasible ? 'Feasible' : 'Infeasible')}
+                  {((): string => {
+                    const recommendation = rec as any;
+                    const explicitFeasibility = recommendation?.feasibility ?? recommendation?.status;
+                    if (typeof explicitFeasibility === 'string' && explicitFeasibility.trim()) {
+                      return explicitFeasibility;
+                    }
+                    if (recommendation && typeof recommendation.is_feasible === 'boolean') {
+                      return recommendation.is_feasible ? 'Feasible' : 'Infeasible';
+                    }
+                    if ((brainRun as any)?.status === 'NO_FEASIBLE_WINDOW' || (brainRun as any)?.success === false) {
+                      return 'Infeasible';
+                    }
+                    if ((brainRun as any)?.status === 'ANALYZED' || (brainRun as any)?.success === true) {
+                      return 'Feasible';
+                    }
+                    return 'MISSING DATA';
+                  })()}
                 </span>
               </div>
             </div>

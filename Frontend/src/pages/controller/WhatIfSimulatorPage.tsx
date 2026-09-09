@@ -93,8 +93,27 @@ export const WhatIfSimulatorPage: React.FC = () => {
     simulationRecommendation.affected_train_count ??
     simulationResult?.affected_train_count ??
     simulationResult?.affected_trains?.length;
-  const isFeasible =
-    simulationRecommendation.is_feasible ?? simulationResult?.is_feasible ?? undefined;
+
+  const feasibilityStatus = (() => {
+    const recommendation = simulationResult?.recommendation ?? simulationRecommendation;
+    const recommendationFeasibility = recommendation?.feasibility ?? (recommendation as any)?.status;
+    if (typeof recommendationFeasibility === 'string' && recommendationFeasibility.trim()) {
+      return recommendationFeasibility;
+    }
+    if (recommendation && typeof recommendation === 'object' && 'is_feasible' in recommendation) {
+      const isFeasibleValue = (recommendation as any).is_feasible;
+      if (isFeasibleValue !== undefined) {
+        return isFeasibleValue ? 'Feasible' : 'Infeasible';
+      }
+    }
+    if (simulationResult?.status === 'NO_FEASIBLE_WINDOW' || simulationResult?.success === false) {
+      return 'Infeasible';
+    }
+    if (simulationResult?.status === 'ANALYZED' || simulationResult?.success === true || simulationStatus === 'success') {
+      return 'Feasible';
+    }
+    return 'MISSING DATA';
+  })();
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-100">
@@ -321,7 +340,7 @@ export const WhatIfSimulatorPage: React.FC = () => {
                   <div className="p-3 bg-slate-50 rounded border border-slate-200">
                     <span className="text-[10px] font-mono uppercase text-slate-400">Feasibility</span>
                     <div className="text-sm font-bold text-emerald-700 mt-1 uppercase font-mono">
-                      {isFeasible === undefined ? 'MISSING DATA' : isFeasible ? 'Feasible' : 'Infeasible'}
+                      {feasibilityStatus}
                     </div>
                   </div>
                 </div>

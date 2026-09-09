@@ -91,6 +91,8 @@ export interface CandidateWindow {
   option_label?: string; // Option A, Option B, etc.
   start: string;
   end: string;
+  status?: string;
+  success?: boolean;
   impact_score?: number;
   conflict_count?: number;
   direct_delay_minutes?: number;
@@ -99,6 +101,7 @@ export interface CandidateWindow {
   downstream_delay_minutes?: number;
   priority_trains_affected?: number | string;
   is_recommended?: boolean;
+  is_feasible?: boolean;
   affected_train_count?: number;
   affected_trains?: Array<{
     train_number: number | string;
@@ -156,6 +159,8 @@ export interface BrainRun {
   datasetVersion?: string;
   algorithmVersion?: string;
   scoringVersion?: string;
+  success?: boolean;
+  status?: string;
   recommendation?: CandidateWindow;
   recommendations?: Array<CandidateWindow | PlanItemRecommendation | any>;
   metrics?: Record<string, any>;
