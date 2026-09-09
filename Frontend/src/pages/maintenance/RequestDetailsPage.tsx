@@ -295,7 +295,8 @@ export const RequestDetailsPage: React.FC = () => {
                   Estimated Train Delay
                 </span>
                 <span className="text-base font-bold font-mono text-emerald-600 mt-1 block">
-                  {rec.direct_delay_minutes ?? 18} min
+                  {rec.direct_delay_minutes ?? rec.total_delay_minutes ?? 'MISSING DATA'}
+                  {rec.direct_delay_minutes !== undefined || rec.total_delay_minutes !== undefined ? ' min' : ''}
                 </span>
               </div>
 
@@ -304,7 +305,7 @@ export const RequestDetailsPage: React.FC = () => {
                   Conflicts
                 </span>
                 <span className="text-base font-bold font-mono text-slate-900 mt-1 block">
-                  {rec.conflict_count ?? 1}
+                  {rec.conflict_count ?? rec.conflicts?.length ?? 'MISSING DATA'}
                 </span>
               </div>
 
@@ -313,7 +314,8 @@ export const RequestDetailsPage: React.FC = () => {
                   Feasibility
                 </span>
                 <span className="text-sm font-bold font-mono text-emerald-700 mt-1.5 block uppercase">
-                  Feasible
+                  {rec.feasibility ??
+                    (rec.is_feasible === undefined ? 'MISSING DATA' : rec.is_feasible ? 'Feasible' : 'Infeasible')}
                 </span>
               </div>
             </div>
