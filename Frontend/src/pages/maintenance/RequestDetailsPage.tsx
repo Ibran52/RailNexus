@@ -202,40 +202,67 @@ export const RequestDetailsPage: React.FC = () => {
         </div>
 
         {/* Track Schematic Visualization */}
-        <RailwayTrack
-          title={`Section Layout: ${request?.fromStation || 'A'} — ${request?.toStation || 'B'}`}
-          subtitle="Simulated track block occupancy against scheduled train movements"
-          stations={[
-            { name: 'From Station', code: request?.fromStation || 'A' },
-            { name: 'Block Section', code: 'SEC-01' },
-            { name: 'To Station', code: request?.toStation || 'B', isJunction: true },
-          ]}
-          blocks={[
-            {
-              id: 'req-block',
-              department: request?.department || 'ENGINEERING',
-              fromStationIndex: 0,
-              toStationIndex: 2,
-              label: `${request?.department || 'MAINTENANCE'} BLOCK`,
-            },
-          ]}
-          trains={
-            rec?.affected_trains?.map((t: any, i: number) => ({
-              trainNumber: typeof t === 'object' ? t.train_number || t.trainNumber : t,
-              positionPercent: 20 + i * 30,
-              direction: 'UP' as const,
-              status: (t.delay_minutes ? 'DELAYED' : 'ON_TIME') as any,
-              delayMinutes: t.delay_minutes,
-            })) || []
-          }
-          highlightWindow={
-            decision?.selectedWindow
-              ? `${new Date(decision.selectedWindow.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}–${new Date(decision.selectedWindow.end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
-              : rec
-              ? `${new Date(rec.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}–${new Date(rec.end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
-              : undefined
-          }
-        />
+        {(() => {
+          const mappedTrains =
+            rec?.affected_trains
+              ?.map((t: any) => {
+                const trainNumber = typeof t === 'object' ? t.train_number ?? t.trainNumber : t;
+                const positionPercent =
+                  typeof t === 'object'
+                    ? Number(t.position_percent ?? t.positionPercent ?? t.location_percent ?? NaN)
+                    : NaN;
+
+                if (!trainNumber || !Number.isFinite(positionPercent) || positionPercent < 0 || positionPercent > 100) {
+                  return null;
+                }
+
+                return {
+                  trainNumber,
+                  positionPercent,
+                  direction: 'UP' as const,
+                  status: (t.delay_minutes ? 'DELAYED' : 'ON_TIME') as any,
+                  delayMinutes: t.delay_minutes,
+                };
+              })
+              ?.filter(Boolean) ?? [];
+
+          return (
+            <>
+              <RailwayTrack
+                title={`Section Layout: ${request?.fromStation || 'A'} — ${request?.toStation || 'B'}`}
+                subtitle="Simulated track block occupancy against scheduled train movements"
+                stations={[
+                  { name: 'From Station', code: request?.fromStation || 'A' },
+                  { name: 'Block Section', code: 'SEC-01' },
+                  { name: 'To Station', code: request?.toStation || 'B', isJunction: true },
+                ]}
+                blocks={[
+                  {
+                    id: 'req-block',
+                    department: request?.department || 'ENGINEERING',
+                    fromStationIndex: 0,
+                    toStationIndex: 2,
+                    label: `${request?.department || 'MAINTENANCE'} BLOCK`,
+                  },
+                ]}
+                trains={mappedTrains}
+                highlightWindow={
+                  decision?.selectedWindow
+                    ? `${new Date(decision.selectedWindow.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}–${new Date(decision.selectedWindow.end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+                    : rec
+                    ? `${new Date(rec.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}–${new Date(rec.end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+                    : undefined
+                }
+              />
+
+              {rec?.affected_trains?.length && mappedTrains.length === 0 && (
+                <div className="bg-amber-50 border border-amber-200 rounded-md px-3 py-2 text-[11px] font-mono text-amber-800">
+                  LIVE TRAIN LOCATION: MISSING DATA
+                </div>
+              )}
+            </>
+          );
+        })()}
 
         {/* Recommendation Assessment Box (if available) */}
         {rec ? (

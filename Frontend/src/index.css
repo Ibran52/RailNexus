@@ -6,6 +6,18 @@
   body {
     @apply bg-[#F8FAFC] text-[#0F172A] antialiased selection:bg-rail-navy selection:text-white;
   }
+
+  input,
+  textarea,
+  select {
+    @apply border border-slate-300 bg-white text-slate-900 shadow-sm transition-colors duration-150;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    @apply border-rail-navy ring-2 ring-rail-navy/10 outline-none;
+  }
 }
 
 /* Operational Railway Track Styling */

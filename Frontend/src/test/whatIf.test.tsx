@@ -59,10 +59,19 @@ describe('What-If Simulator Verification', () => {
   it('correctly labels simulation output as WHAT-IF / SIMULATION ONLY and non-operational', async () => {
     vi.mocked(controllerApi.getAllRequests).mockResolvedValue(dummyRequests);
     vi.mocked(controllerApi.runWhatIf).mockResolvedValue({
-      direct_delay_minutes: 14,
-      impact_score: 22,
-      conflict_count: 0,
-      is_feasible: true,
+      metrics: {
+        total_delay_minutes: 14,
+        direct_delay_minutes: 6,
+        cascade_delay_minutes: 8,
+        conflict_count: 0,
+        affected_train_count: 2,
+      },
+      recommendation: {
+        impact_score: 22,
+        conflict_count: 0,
+        is_feasible: true,
+      },
+      is_feasible: false,
       explanation: 'Simulation completed with zero critical corridor conflicts.',
       affected_trains: [],
     });
@@ -93,6 +102,11 @@ describe('What-If Simulator Verification', () => {
     expect(
       screen.getByText(/This projection is sandbox-evaluated and does NOT commit operational block approvals/i)
     ).toBeInTheDocument();
+
+    expect(screen.getByText(/14/i)).toBeInTheDocument();
+    expect(screen.getByText('22')).toBeInTheDocument();
+    expect(screen.getByText('0')).toBeInTheDocument();
+    expect(screen.getByText('Feasible')).toBeInTheDocument();
 
     // Verify runWhatIf was called but approveRequest/modifyRequest were NOT
     expect(controllerApi.runWhatIf).toHaveBeenCalledTimes(1);

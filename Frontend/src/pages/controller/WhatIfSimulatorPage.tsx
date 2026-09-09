@@ -52,6 +52,36 @@ export const WhatIfSimulatorPage: React.FC = () => {
   };
 
   const activeRequest = requests.find((r) => r.requestId === selectedRequestId);
+  const simulationMetrics = simulationResult?.metrics ?? {};
+  const simulationRecommendation = simulationResult?.recommendation ?? {};
+  const totalDelay =
+    simulationMetrics.total_delay_minutes ??
+    simulationRecommendation.total_delay_minutes ??
+    simulationResult?.total_delay_minutes;
+  const directDelay =
+    simulationMetrics.direct_delay_minutes ??
+    simulationRecommendation.direct_delay_minutes ??
+    simulationResult?.direct_delay_minutes;
+  const cascadeDelay =
+    simulationMetrics.cascade_delay_minutes ??
+    simulationRecommendation.cascade_delay_minutes ??
+    simulationResult?.cascade_delay_minutes;
+  const impactScore =
+    simulationRecommendation.impact_score ??
+    simulationMetrics.impact_score ??
+    simulationResult?.impact_score;
+  const conflictCount =
+    simulationMetrics.conflict_count ??
+    simulationRecommendation.conflict_count ??
+    simulationResult?.conflict_count ??
+    simulationResult?.conflicts?.length;
+  const affectedTrainCount =
+    simulationMetrics.affected_train_count ??
+    simulationRecommendation.affected_train_count ??
+    simulationResult?.affected_train_count ??
+    simulationResult?.affected_trains?.length;
+  const isFeasible =
+    simulationRecommendation.is_feasible ?? simulationResult?.is_feasible ?? undefined;
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-100">
@@ -246,40 +276,54 @@ export const WhatIfSimulatorPage: React.FC = () => {
                   <div className="p-3 bg-slate-50 rounded border border-slate-200">
                     <span className="text-[10px] font-mono uppercase text-slate-400">Total Delay</span>
                     <div className="text-xl font-bold font-mono text-slate-900 mt-0.5">
-                      {simulationResult.recommendation?.direct_delay_minutes ??
-                        simulationResult.direct_delay_minutes ??
-                        'MISSING DATA'}{' '}
-                      min
+                      {totalDelay ?? 'MISSING DATA'} min
                     </div>
                   </div>
 
                   <div className="p-3 bg-slate-50 rounded border border-slate-200">
                     <span className="text-[10px] font-mono uppercase text-slate-400">Impact Score</span>
                     <div className="text-xl font-bold font-mono text-emerald-600 mt-0.5">
-                      {simulationResult.recommendation?.impact_score ??
-                        simulationResult.impact_score ??
-                        '--'}
+                      {impactScore ?? '--'}
                     </div>
                   </div>
 
                   <div className="p-3 bg-slate-50 rounded border border-slate-200">
                     <span className="text-[10px] font-mono uppercase text-slate-400">Conflicts</span>
                     <div className="text-xl font-bold font-mono text-slate-900 mt-0.5">
-                      {simulationResult.conflict_count ??
-                        simulationResult.conflicts?.length ??
-                        'MISSING DATA'}
+                      {conflictCount ?? 'MISSING DATA'}
                     </div>
                   </div>
 
                   <div className="p-3 bg-slate-50 rounded border border-slate-200">
                     <span className="text-[10px] font-mono uppercase text-slate-400">Feasibility</span>
                     <div className="text-sm font-bold text-emerald-700 mt-1 uppercase font-mono">
-                      {simulationResult.is_feasible === undefined
-                        ? 'MISSING DATA'
-                        : simulationResult.is_feasible ? 'Feasible' : 'Infeasible'}
+                      {isFeasible === undefined ? 'MISSING DATA' : isFeasible ? 'Feasible' : 'Infeasible'}
                     </div>
                   </div>
                 </div>
+
+                {(directDelay !== undefined || cascadeDelay !== undefined || affectedTrainCount !== undefined) && (
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px] text-slate-600">
+                    {directDelay !== undefined && (
+                      <div className="p-2 bg-slate-50 border border-slate-200 rounded">
+                        <span className="block font-mono uppercase text-slate-400">Direct Delay</span>
+                        <span className="font-bold font-mono text-slate-900">{directDelay} min</span>
+                      </div>
+                    )}
+                    {cascadeDelay !== undefined && (
+                      <div className="p-2 bg-slate-50 border border-slate-200 rounded">
+                        <span className="block font-mono uppercase text-slate-400">Cascade Delay</span>
+                        <span className="font-bold font-mono text-slate-900">{cascadeDelay} min</span>
+                      </div>
+                    )}
+                    {affectedTrainCount !== undefined && (
+                      <div className="p-2 bg-slate-50 border border-slate-200 rounded">
+                        <span className="block font-mono uppercase text-slate-400">Affected Trains</span>
+                        <span className="font-bold font-mono text-slate-900">{affectedTrainCount}</span>
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 {simulationResult.explanation && (
                   <div className="p-3.5 bg-emerald-50/60 border border-emerald-200 rounded text-xs text-slate-700">
