@@ -1,6 +1,19 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 
-export const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || '/api/v1').replace(/\/+$/, '');
+const resolveBaseBackendUrl = () => {
+  if (import.meta.env.VITE_API_URL?.trim()) {
+    return import.meta.env.VITE_API_URL.trim();
+  }
+
+  const hostname = typeof window !== 'undefined' ? window.location.hostname : '';
+  if (hostname === 'localhost' || hostname === '127.0.0.1') {
+    return 'http://localhost:5000';
+  }
+
+  return 'https://railnexus-backend.onrender.com';
+};
+
+export const apiBaseUrl = `${resolveBaseBackendUrl().replace(/\/+$/, '')}/api/v1`;
 
 let accessToken: string | null = localStorage.getItem('railnexus_access_token');
 
