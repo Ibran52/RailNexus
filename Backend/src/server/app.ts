@@ -21,6 +21,7 @@ import { ErrorCode } from './config/constants';
 export function createApp(): Express {
   const app = express();
 
+  app.set('trust proxy', 1);
   // 1. Security Headers
   app.use(helmet());
 
