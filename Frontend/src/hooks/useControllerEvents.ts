@@ -28,8 +28,11 @@ function isValidControllerEvent(obj: unknown): obj is ControllerEvent {
   return true;
 }
 
+export type ControllerSseStatus = 'CONNECTING' | 'ONLINE' | 'RECONNECTING' | 'OFFLINE';
+
 export function useControllerEvents(onEvent?: (event: ControllerEvent) => void) {
   const [isConnected, setIsConnected] = useState(false);
+  const [connectionStatus, setConnectionStatus] = useState<ControllerSseStatus>('CONNECTING');
   const [lastEvent, setLastEvent] = useState<ControllerEvent | null>(null);
   const [events, setEvents] = useState<ControllerEvent[]>([]);
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -51,8 +54,11 @@ export function useControllerEvents(onEvent?: (event: ControllerEvent) => void) 
       let token = getAccessToken();
       if (!token) {
         setIsConnected(false);
+        setConnectionStatus('OFFLINE');
         return;
       }
+
+      setConnectionStatus('CONNECTING');
 
       abortControllerRef.current = new AbortController();
 
@@ -78,6 +84,7 @@ export function useControllerEvents(onEvent?: (event: ControllerEvent) => void) 
           } catch (refreshErr) {
             // Refresh failed: authentication cleared by executeTokenRefresh
             setIsConnected(false);
+            setConnectionStatus('OFFLINE');
             return;
           }
         }
@@ -87,6 +94,7 @@ export function useControllerEvents(onEvent?: (event: ControllerEvent) => void) 
         }
 
         setIsConnected(true);
+        setConnectionStatus('ONLINE');
         // Reset backoff on successful connection
         backoffDelay = 1000;
 
@@ -153,6 +161,7 @@ export function useControllerEvents(onEvent?: (event: ControllerEvent) => void) 
       } catch (err: any) {
         if (err.name !== 'AbortError' && isActive) {
           setIsConnected(false);
+          setConnectionStatus('RECONNECTING');
           // Exponential backoff reconnect
           const nextDelay = backoffDelay;
           backoffDelay = Math.min(backoffDelay * 2, MAX_BACKOFF);
@@ -175,8 +184,9 @@ export function useControllerEvents(onEvent?: (event: ControllerEvent) => void) 
         clearTimeout(reconnectTimeoutRef.current);
       }
       setIsConnected(false);
+      setConnectionStatus('OFFLINE');
     };
   }, []);
 
-  return { isConnected, lastEvent, events };
+  return { isConnected, connectionStatus, lastEvent, events };
 }

@@ -12,7 +12,7 @@ import {
   rejectRequest,
   runWhatIfSimulation,
 } from '../services/decisionService';
-import { getAnalysisForRequest, getRequestById } from '../services/maintenanceService';
+import { getAnalysisForRequest, getRequestById, serializeMaintenanceRequest } from '../services/maintenanceService';
 import { registerSseClient } from '../services/eventService';
 import { AuthenticatedUser } from '../middleware/auth';
 import { ErrorCode } from '../config/constants';
@@ -21,9 +21,10 @@ import { ErrorCode } from '../config/constants';
 export async function getAllRequests(_req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const requests = await MaintenanceRequest.find().sort({ createdAt: -1 });
+    const serializedRequests = await Promise.all(requests.map((request) => serializeMaintenanceRequest(request)));
     res.status(200).json({
       success: true,
-      data: requests,
+      data: serializedRequests,
     });
   } catch (err) {
     next(err);
@@ -47,10 +48,16 @@ export async function getRequestAnalysis(req: Request, res: Response, next: Next
   try {
     const user = req.user as AuthenticatedUser;
     const brainRun = await getAnalysisForRequest(req.params.requestId, user);
+    const { request } = await getRequestById(req.params.requestId, user);
 
     res.status(200).json({
       success: true,
       data: {
+        request: {
+          ...request,
+          submitterName: request.submitterName || 'MISSING DATA',
+        },
+        submitterName: request.submitterName || 'MISSING DATA',
         brainRunId: brainRun.brainRunId,
         requestId: brainRun.requestId,
         planningVersion: brainRun.planningVersion,

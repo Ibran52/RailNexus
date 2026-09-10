@@ -140,6 +140,9 @@ export const CandidateWindowsPage: React.FC = () => {
             </span>{' '}
             section · {new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
           </p>
+          <p className="text-[11px] text-slate-600 font-medium mt-1">
+            Submitted By: <span className="font-semibold text-slate-800">{request?.submitterName || 'MISSING DATA'}</span>
+          </p>
         </div>
 
         {/* Toolbar Buttons */}

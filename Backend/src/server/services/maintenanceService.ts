@@ -5,6 +5,7 @@
 
 import mongoose from 'mongoose';
 import { MaintenanceRequest, IMaintenanceRequest } from '../models/MaintenanceRequest';
+import { User } from '../models/User';
 import { BrainRun, IBrainRun } from '../models/BrainRun';
 import { ControllerDecision } from '../models/ControllerDecision';
 import { incrementPlanningVersion } from '../models/PlanningStateCounter';
@@ -39,6 +40,29 @@ export function generateBrainRunId(): string {
   const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
   const rand = Math.random().toString(36).substring(2, 7).toUpperCase();
   return `RUN-${dateStr}-${rand}`;
+}
+
+export async function resolveSubmitterName(createdBy?: string | mongoose.Types.ObjectId | null): Promise<string> {
+  if (!createdBy) return 'MISSING DATA';
+
+  try {
+    const user = await User.findById(createdBy).lean();
+    const trimmedName = typeof user?.name === 'string' ? user.name.trim() : '';
+    return trimmedName || 'MISSING DATA';
+  } catch {
+    return 'MISSING DATA';
+  }
+}
+
+export async function serializeMaintenanceRequest(request: IMaintenanceRequest | any): Promise<any> {
+  const plainRequest = request && typeof request.toObject === 'function' ? request.toObject() : request;
+  const createdBy = plainRequest?.createdBy ?? request?.createdBy;
+  const submitterName = await resolveSubmitterName(createdBy);
+
+  return {
+    ...plainRequest,
+    submitterName,
+  };
 }
 
 /**
@@ -114,7 +138,10 @@ export async function createMaintenanceRequest(
             const run = await BrainRun.findOne({ brainRunId: existing.currentBrainRunId });
             existingBrainRun = run ?? undefined;
           }
-          return { request: existing, brainRun: existingBrainRun };
+          return {
+            request: await serializeMaintenanceRequest(existing),
+            brainRun: existingBrainRun,
+          };
         }
       }
     }
@@ -261,7 +288,8 @@ export async function createMaintenanceRequest(
     recommendation: brainResponse.recommendation,
   });
 
-  return { request: updatedRequest, brainRun };
+  const serialisedRequest = await serializeMaintenanceRequest(updatedRequest);
+  return { request: serialisedRequest, brainRun };
 }
 
 /**
@@ -269,24 +297,27 @@ export async function createMaintenanceRequest(
  */
 export async function getMaintenanceRequestsForUser(
   user: AuthenticatedUser
-): Promise<IMaintenanceRequest[]> {
+): Promise<any[]> {
   const isControllerOrAdmin =
     user.role === Role.CONTROLLER || user.role === Role.ADMIN;
 
+  let requests: IMaintenanceRequest[];
   if (isControllerOrAdmin) {
-    return await MaintenanceRequest.find().sort({ createdAt: -1 });
+    requests = await MaintenanceRequest.find().sort({ createdAt: -1 });
+  } else {
+    const userDept = user.department ? user.department.trim() : '';
+    const escapedDept = userDept.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const query: any = {
+      $or: [
+        { department: { $regex: new RegExp(`^${escapedDept}$`, 'i') } },
+        { createdBy: user.id },
+      ],
+    };
+
+    requests = await MaintenanceRequest.find(query).sort({ createdAt: -1 });
   }
 
-  const userDept = user.department ? user.department.trim() : '';
-  const escapedDept = userDept.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const query: any = {
-    $or: [
-      { department: { $regex: new RegExp(`^${escapedDept}$`, 'i') } },
-      { createdBy: user.id },
-    ],
-  };
-
-  return await MaintenanceRequest.find(query).sort({ createdAt: -1 });
+  return await Promise.all(requests.map((request) => serializeMaintenanceRequest(request)));
 }
 
 /**
@@ -296,7 +327,7 @@ export async function getRequestById(
   requestId: string,
   user: AuthenticatedUser
 ): Promise<{
-  request: IMaintenanceRequest;
+  request: IMaintenanceRequest & { submitterName?: string };
   brainRun?: IBrainRun | null;
   activeAnalysis?: IBrainRun | null;
   decision?: any | null;
@@ -332,7 +363,12 @@ export async function getRequestById(
   // Fetch the latest controller decision for this request if one exists
   const decision = await ControllerDecision.findOne({ requestId }).sort({ createdAt: -1 });
 
-  return { request, brainRun, activeAnalysis: brainRun, decision };
+  return {
+    request: await serializeMaintenanceRequest(request),
+    brainRun,
+    activeAnalysis: brainRun,
+    decision,
+  };
 }
 
 /**
@@ -341,7 +377,7 @@ export async function getRequestById(
 export async function getAnalysisForRequest(
   requestId: string,
   user: AuthenticatedUser
-): Promise<IBrainRun> {
+): Promise<IBrainRun & { submitterName?: string }> {
   const { request } = await getRequestById(requestId, user);
 
   if (!request.currentBrainRunId) {
@@ -359,5 +395,8 @@ export async function getAnalysisForRequest(
     throw err;
   }
 
-  return brainRun;
+  return {
+    ...brainRun.toObject(),
+    submitterName: request.submitterName || 'MISSING DATA',
+  } as unknown as IBrainRun & { submitterName?: string };
 }

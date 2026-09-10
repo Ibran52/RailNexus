@@ -176,7 +176,7 @@ export const RequestDetailsPage: React.FC = () => {
               {request && <StatusBadge status={request.status} />}
             </div>
             <p className="text-xs text-slate-500 font-medium mt-1">
-              Requisition submitted by <span className="font-semibold text-slate-700">{request?.department}</span> on{' '}
+              Submitted By: <span className="font-semibold text-slate-700">{request?.submitterName || 'MISSING DATA'}</span> ·{' '}
               {request ? new Date(request.createdAt).toLocaleString() : '—'}
             </p>
           </div>

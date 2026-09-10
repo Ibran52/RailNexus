@@ -221,7 +221,12 @@ export const BlockPlannerPage: React.FC = () => {
                       </td>
 
                       <td className="py-3 px-4 font-semibold text-slate-800">
-                        {isEngineering ? 'Engineering / Track' : isSnt ? 'S&T' : isOhe ? 'Traction / OHE' : r.department}
+                        <div>
+                          {isEngineering ? 'Engineering / Track' : isSnt ? 'S&T' : isOhe ? 'Traction / OHE' : r.department}
+                        </div>
+                        <div className="text-[10px] font-mono text-slate-500 mt-1">
+                          Submitted By: {r.submitterName || 'MISSING DATA'}
+                        </div>
                       </td>
 
                       <td className="py-3 px-4">

@@ -4,14 +4,25 @@ import { useAuth } from '../context/AuthContext';
 import { Role, formatDepartment } from '../types';
 import { LogOut, Activity, Radio, UserCircle } from 'lucide-react';
 
+export type SseStatus = 'ONLINE' | 'OFFLINE' | 'CONNECTING' | 'RECONNECTING' | 'NOT_REQUIRED';
+
 interface TopNavProps {
   isSseConnected?: boolean;
+  sseStatus?: SseStatus;
 }
 
-export const TopNav: React.FC<TopNavProps> = ({ isSseConnected = false }) => {
+export const TopNav: React.FC<TopNavProps> = ({ isSseConnected, sseStatus }) => {
   const { user, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+
+  const resolvedStatus: SseStatus =
+    sseStatus ??
+    (typeof isSseConnected === 'boolean' ? (isSseConnected ? 'ONLINE' : 'OFFLINE') : 'NOT_REQUIRED');
+
+  const isLive = resolvedStatus === 'ONLINE';
+  const isTransitioning = resolvedStatus === 'CONNECTING' || resolvedStatus === 'RECONNECTING';
+  const isNotRequired = resolvedStatus === 'NOT_REQUIRED';
 
   const isController = user?.role === Role.CONTROLLER || user?.role === Role.ADMIN;
 
@@ -88,18 +99,34 @@ export const TopNav: React.FC<TopNavProps> = ({ isSseConnected = false }) => {
           {isController && (
             <div
               className={`flex items-center space-x-1.5 px-2 py-0.5 rounded text-[10px] font-mono border ${
-                isSseConnected
+                isLive
                   ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
-                  : 'bg-slate-100 text-slate-500 border-slate-300'
+                  : isTransitioning
+                    ? 'bg-amber-50 text-amber-700 border-amber-300'
+                    : isNotRequired
+                      ? 'bg-slate-100 text-slate-500 border-slate-300'
+                      : 'bg-slate-100 text-slate-500 border-slate-300'
               }`}
             >
               <span
                 className={`inline-block w-1.5 h-1.5 rounded-full ${
-                  isSseConnected ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'
+                  isLive
+                    ? 'bg-emerald-500 animate-pulse'
+                    : isTransitioning
+                      ? 'bg-amber-500 animate-pulse'
+                      : 'bg-slate-400'
                 }`}
               />
               <Radio className="h-3 w-3" />
-              <span>{isSseConnected ? 'LIVE FEED' : 'OFFLINE'}</span>
+              <span>
+                {isLive
+                  ? 'LIVE FEED'
+                  : isTransitioning
+                    ? (resolvedStatus === 'CONNECTING' ? 'CONNECTING' : 'RECONNECTING')
+                    : isNotRequired
+                      ? 'NOT REQUIRED'
+                      : 'OFFLINE'}
+              </span>
             </div>
           )}
 

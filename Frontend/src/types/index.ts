@@ -70,6 +70,7 @@ export interface MaintenanceRequest {
   _id: string;
   requestId: string;
   createdBy: string | User;
+  submitterName?: string;
   department: Department;
   maintenanceType: string;
   fromStation: string;

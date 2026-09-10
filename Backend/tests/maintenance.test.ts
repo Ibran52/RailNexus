@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
+import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../src/server/app';
 import { User } from '../src/server/models/User';
@@ -104,6 +105,122 @@ describe('Maintenance Request Lifecycle & Ownership', () => {
     const savedReq = await MaintenanceRequest.findOne({ requestId: res.body.data.request.requestId });
     expect(savedReq).toBeDefined();
     expect(savedReq?.status).toBe(RequestStatus.RECOMMENDED);
+  });
+
+  it('should associate the creator with the authenticated user and ignore a spoofed name', async () => {
+    const mockBrainResponse: BrainAnalyzeResponse = {
+      success: true,
+      request_id: 'REQ-SPOOF-001',
+      recommendation: {
+        start: '2026-09-05T07:00:00.000Z',
+        end: '2026-09-05T09:00:00.000Z',
+        impact_score: 20,
+      },
+      metrics: { impact_score: 20 },
+      conflicts: [],
+      alternatives: [],
+    };
+
+    vi.spyOn(brainClient, 'analyzeMaintenanceWindow').mockResolvedValueOnce(mockBrainResponse);
+
+    const res = await request(app)
+      .post('/api/v1/maintenance')
+      .set('Authorization', `Bearer ${engToken}`)
+      .send({
+        name: 'Hacker impersonating user',
+        maintenanceType: 'TRACK_TAMPING',
+        fromStation: 'NDLS',
+        toStation: 'GZB',
+        durationMinutes: 90,
+        earliestStart: '2026-09-05T06:00:00.000Z',
+        latestEnd: '2026-09-05T12:00:00.000Z',
+        priority: RequestPriority.MEDIUM,
+      });
+
+    expect(res.status).toBe(201);
+    expect(res.body.data.request.createdBy).toBe(engUserId);
+    expect(res.body.data.request.submitterName).toBe('Eng User');
+
+    const dbDoc = await MaintenanceRequest.findOne({ requestId: res.body.data.request.requestId });
+    expect(dbDoc?.createdBy?.toString()).toBe(engUserId);
+  });
+
+  it('should expose a verified submitterName to controllers in request list and detail responses', async () => {
+    const mockBrainResponse: BrainAnalyzeResponse = {
+      success: true,
+      request_id: 'REQ-SUBMITTER-001',
+      recommendation: {
+        start: '2026-09-05T07:00:00.000Z',
+        end: '2026-09-05T09:00:00.000Z',
+        impact_score: 18,
+      },
+      metrics: { impact_score: 18 },
+      conflicts: [],
+      alternatives: [],
+    };
+
+    vi.spyOn(brainClient, 'analyzeMaintenanceWindow').mockResolvedValueOnce(mockBrainResponse);
+
+    const createRes = await request(app)
+      .post('/api/v1/maintenance')
+      .set('Authorization', `Bearer ${engToken}`)
+      .send({
+        maintenanceType: 'SIGNAL_TESTING',
+        fromStation: 'GZB',
+        toStation: 'ALJN',
+        durationMinutes: 75,
+        earliestStart: '2026-09-05T06:00:00.000Z',
+        latestEnd: '2026-09-05T13:00:00.000Z',
+        priority: RequestPriority.HIGH,
+      });
+
+    expect(createRes.status).toBe(201);
+    const requestId = createRes.body.data.request.requestId;
+
+    const listRes = await request(app)
+      .get('/api/v1/controller/requests')
+      .set('Authorization', `Bearer ${controllerToken}`);
+    expect(listRes.status).toBe(200);
+    expect(listRes.body.data.some((item: any) => item.requestId === requestId)).toBe(true);
+    expect(listRes.body.data.find((item: any) => item.requestId === requestId).submitterName).toBe('Eng User');
+
+    const detailRes = await request(app)
+      .get(`/api/v1/controller/requests/${requestId}`)
+      .set('Authorization', `Bearer ${controllerToken}`);
+    expect(detailRes.status).toBe(200);
+    expect(detailRes.body.data.request.submitterName).toBe('Eng User');
+
+    const analysisRes = await request(app)
+      .get(`/api/v1/controller/requests/${requestId}/analysis`)
+      .set('Authorization', `Bearer ${controllerToken}`);
+    expect(analysisRes.status).toBe(200);
+    expect(analysisRes.body.data.request.submitterName).toBe('Eng User');
+  });
+
+  it('should fall back to MISSING DATA when the authenticated creator user record cannot be resolved', async () => {
+    const ghostId = new mongoose.Types.ObjectId().toString();
+    await MaintenanceRequest.create({
+      requestId: 'REQ-MISSING-USER-001',
+      createdBy: ghostId,
+      department: Department.ENGINEERING,
+      maintenanceType: 'TRACK_RENEWAL',
+      fromStation: 'NDLS',
+      toStation: 'GZB',
+      durationMinutes: 60,
+      earliestStart: new Date('2026-09-05T06:00:00Z'),
+      latestEnd: new Date('2026-09-05T10:00:00Z'),
+      priority: RequestPriority.MEDIUM,
+      status: RequestStatus.RECOMMENDED,
+    });
+
+    const res = await request(app)
+      .get('/api/v1/controller/requests')
+      .set('Authorization', `Bearer ${controllerToken}`);
+
+    expect(res.status).toBe(200);
+    const row = res.body.data.find((item: any) => item.requestId === 'REQ-MISSING-USER-001');
+    expect(row).toBeDefined();
+    expect(row.submitterName).toBe('MISSING DATA');
   });
 
   it('should reject maintenance request when earliestStart >= latestEnd', async () => {

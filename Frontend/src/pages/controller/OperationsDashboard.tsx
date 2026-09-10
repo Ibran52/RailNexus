@@ -21,7 +21,7 @@ export const OperationsDashboard: React.FC = () => {
   const [partialErrors, setPartialErrors] = useState<string[]>([]);
 
   // Authenticated real-time SSE feed
-  const { isConnected, lastEvent } = useControllerEvents((event) => {
+  const { isConnected, connectionStatus, lastEvent } = useControllerEvents((event) => {
     console.log('[SSE EVENT RECEIVED]:', event);
     // Refresh requests when operational status changes
     loadData();
@@ -144,7 +144,7 @@ export const OperationsDashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f4f6f8] text-slate-800">
-      <TopNav isSseConnected={isConnected} />
+      <TopNav isSseConnected={isConnected} sseStatus={connectionStatus} />
 
       <main className="flex-1 max-w-[1700px] w-full mx-auto p-4 sm:p-6 flex flex-col gap-4">
         {/* Critical System Error Notification */}

@@ -33,8 +33,11 @@ function isValidMaintenanceEvent(obj: unknown): obj is MaintenanceEvent {
   return true;
 }
 
+export type MaintenanceSseStatus = 'CONNECTING' | 'ONLINE' | 'RECONNECTING' | 'OFFLINE';
+
 export function useMaintenanceEvents(onEvent?: (event: MaintenanceEvent) => void) {
   const [isConnected, setIsConnected] = useState<boolean>(false);
+  const [connectionStatus, setConnectionStatus] = useState<MaintenanceSseStatus>('CONNECTING');
   const [lastEvent, setLastEvent] = useState<MaintenanceEvent | null>(null);
   const [events, setEvents] = useState<MaintenanceEvent[]>([]);
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -56,8 +59,11 @@ export function useMaintenanceEvents(onEvent?: (event: MaintenanceEvent) => void
       let token = getAccessToken();
       if (!token) {
         setIsConnected(false);
+        setConnectionStatus('OFFLINE');
         return;
       }
+
+      setConnectionStatus('CONNECTING');
 
       abortControllerRef.current = new AbortController();
 
@@ -80,6 +86,7 @@ export function useMaintenanceEvents(onEvent?: (event: MaintenanceEvent) => void
             }
           } catch {
             setIsConnected(false);
+            setConnectionStatus('OFFLINE');
             return;
           }
         }
@@ -89,6 +96,7 @@ export function useMaintenanceEvents(onEvent?: (event: MaintenanceEvent) => void
         }
 
         setIsConnected(true);
+        setConnectionStatus('ONLINE');
         backoffDelay = 1000;
 
         const reader = response.body.getReader();
@@ -154,6 +162,7 @@ export function useMaintenanceEvents(onEvent?: (event: MaintenanceEvent) => void
       } catch (err: any) {
         if (!isActive || err.name === 'AbortError') return;
         setIsConnected(false);
+        setConnectionStatus('RECONNECTING');
 
         // Exponential backoff reconnect
         reconnectTimeoutRef.current = setTimeout(() => {
@@ -176,8 +185,9 @@ export function useMaintenanceEvents(onEvent?: (event: MaintenanceEvent) => void
         clearTimeout(reconnectTimeoutRef.current);
       }
       setIsConnected(false);
+      setConnectionStatus('OFFLINE');
     };
   }, []);
 
-  return { isConnected, lastEvent, events };
+  return { isConnected, connectionStatus, lastEvent, events };
 }

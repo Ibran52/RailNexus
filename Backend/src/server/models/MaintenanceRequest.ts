@@ -10,6 +10,7 @@ export interface IMaintenanceRequest extends Document {
   _id: mongoose.Types.ObjectId;
   requestId: string;
   createdBy: mongoose.Types.ObjectId;
+  submitterName?: string;
   department: Department | string;
   maintenanceType: string;
   fromStation: string;

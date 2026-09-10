@@ -40,6 +40,7 @@ describe('RequestDetailsPage recommendation metrics', () => {
         _id: 'req-1',
         requestId: 'REQ-123',
         createdBy: 'user-1',
+        submitterName: 'Eng User',
         department: Department.ENGINEERING,
         maintenanceType: 'Track Tamping',
         fromStation: 'BUD',
@@ -116,6 +117,8 @@ describe('RequestDetailsPage recommendation metrics', () => {
       expect(screen.getByText(/REQ-123/i)).toBeInTheDocument();
     });
 
+    expect(screen.getByText(/Submitted By:/i)).toBeInTheDocument();
+    expect(screen.getByText('Eng User')).toBeInTheDocument();
     expect(screen.getByText(/93\.67/i)).toBeInTheDocument();
     expect(screen.getByText('2')).toBeInTheDocument();
     expect(screen.getByText('Infeasible')).toBeInTheDocument();
